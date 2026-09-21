@@ -1,0 +1,21 @@
+{
+  "format": "local-mod-browser-runtime",
+  "schemaVersion": 1,
+  "platform": "windows-x86_64",
+  "python": {
+    "version": "3.13.15",
+    "archive": "python-3.13.15-embed-amd64.zip",
+    "url": "https://www.python.org/ftp/python/3.13.15/python-3.13.15-embed-amd64.zip",
+    "sha256": "d1f04d990aee1253d8569e8e5104e30fa9f5fa830899f14843448872d936a2cf",
+    "license": "PSF-2.0",
+    "licenseUrl": "https://docs.python.org/3/license.html"
+  },
+  "sqlite": {
+    "version": "3.53.4",
+    "archive": "sqlite-dll-win-x64-3530400.zip",
+    "url": "https://www.sqlite.org/2026/sqlite-dll-win-x64-3530400.zip",
+    "sha3_256": "deddee963c810d1eeac3ce5e15c7c41da21a1c54d7a39cf54fbf577d2f50de3a",
+    "license": "blessing/public-domain",
+    "licenseUrl": "https://www.sqlite.org/copyright.html"
+  }
+}

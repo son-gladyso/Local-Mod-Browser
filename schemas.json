@@ -1,0 +1,307 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Local MOD Browser interchange v1",
+  "description": "Schemas are documentation and tooling contracts; server also performs identity, revision, path and source-hash validation. Choose a $defs entry for the desired operation.",
+  "schemaVersion": 1,
+  "x-platformContract": {"version": "2.5.0", "capabilities": "/api/v2/capabilities", "openapi": "/api/v2/openapi", "sourceOfTruth": "contracts.py"},
+  "$defs": {
+    "requirement": {
+      "type": "object",
+      "required": [
+        "name",
+        "kind",
+        "evidence"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "required",
+            "optional",
+            "unknown"
+          ]
+        },
+        "evidence": {
+          "type": "string"
+        },
+        "modId": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "url": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "editRecord": {
+      "type": "object",
+      "required": [
+        "resourceId",
+        "baseRevision",
+        "patch"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "resourceId": {
+          "type": "string"
+        },
+        "baseRevision": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "patch": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "function": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "details": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "compatibility": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "risk": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "variantRule": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "group": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "description": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "version": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "category": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "tags": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 100
+            },
+            "requirements": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "$ref": "#/$defs/requirement"
+              }
+            }
+          }
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+    "editBatch": {
+      "type": "array",
+      "maxItems": 5000,
+      "items": {
+        "$ref": "#/$defs/editRecord"
+      }
+    },
+    "translationResult": {
+      "type": "object",
+      "required": [
+        "taskId",
+        "resourceId",
+        "field",
+        "segmentId",
+        "sourceHash",
+        "translation"
+      ],
+      "properties": {
+        "taskId": {
+          "type": "string"
+        },
+        "resourceId": {
+          "type": "string"
+        },
+        "field": {
+          "type": "string"
+        },
+        "segmentId": {
+          "type": "string"
+        },
+        "sourceHash": {
+          "type": "string"
+        },
+        "translation": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "selection": {
+      "type": "object",
+      "required": [
+        "fileId",
+        "storedPath",
+        "version",
+        "bytes"
+      ],
+      "properties": {
+        "fileId": {
+          "type": "string"
+        },
+        "storedPath": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "profileManifest": {
+      "type": "object",
+      "required": [
+        "schemaVersion",
+        "format",
+        "game",
+        "files"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": 1
+        },
+        "format": {
+          "const": "local-mod-selection"
+        },
+        "game": {
+          "type": "string"
+        },
+        "profile": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "notes": {
+              "type": "string"
+            }
+          }
+        },
+        "files": {
+          "type": "array",
+          "maxItems": 10000,
+          "items": {
+            "$ref": "#/$defs/selection"
+          }
+        }
+      }
+    },
+    "previewCommit": {
+      "type": "object",
+      "required": [
+        "previewId"
+      ],
+      "properties": {
+        "previewId": {
+          "type": "string"
+        }
+      }
+    },
+    "response": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "ok",
+            "data"
+          ],
+          "properties": {
+            "ok": {
+              "const": true
+            },
+            "data": {}
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "ok",
+            "error"
+          ],
+          "properties": {
+            "ok": {
+              "const": false
+            },
+            "error": {
+              "type": "object",
+              "required": [
+                "code",
+                "message"
+              ],
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

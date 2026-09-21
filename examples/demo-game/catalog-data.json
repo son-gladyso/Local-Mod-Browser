@@ -1,0 +1,32 @@
+[
+  {
+    "modId": 1,
+    "name": "Example Utility",
+    "author": "Example Author",
+    "group": "Utilities",
+    "tags": ["Utility", "Quality of Life"],
+    "downloads": 1200,
+    "endorsements": 84,
+    "updated": 1789776000,
+    "function": "Synthetic catalog item used to demonstrate the local browser.",
+    "details": "This record contains no game asset, MOD archive, or third-party site data.",
+    "requirements": [],
+    "paths": [],
+    "images": []
+  },
+  {
+    "modId": 2,
+    "name": "Example Visual Pack",
+    "author": "Demo Contributor",
+    "group": "Visuals",
+    "tags": ["Visual", "Preset"],
+    "downloads": 640,
+    "endorsements": 31,
+    "updated": 1789689600,
+    "function": "A second fictional record for filtering and sorting demos.",
+    "details": "Replace this demo source with metadata you are permitted to use.",
+    "requirements": [],
+    "paths": [],
+    "images": []
+  }
+]

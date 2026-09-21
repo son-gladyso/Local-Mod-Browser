@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "workflows": [
+    {
+      "id": "profile-build",
+      "title": "筛选、比较并导出精确搭配",
+      "description": "筛选 MOD，比较最多三个文件，创建搭配，逐项选择准确副本并导出。",
+      "requiredInputs": ["search", "fileIds", "profile", "selections", "format"],
+      "steps": [
+        {"operation": "mods.search", "arguments": "$input.search"},
+        {"operation": "files.compare", "arguments": {"ids": "$input.fileIds"}},
+        {"operation": "profiles.save", "arguments": "$input.profile"},
+        {"operation": "profiles.select", "foreach": "$input.selections", "arguments": {"profileId": "$output.2.id"}},
+        {"operation": "profiles.export", "arguments": {"id": "$output.2.id", "format": "$input.format"}}
+      ]
+    },
+    {
+      "id": "content-edit",
+      "title": "读取版本、预览修改并核对回执",
+      "description": "读取指定字段，预览有来源的修改，提交后按幂等键核对结果。",
+      "requiredInputs": ["read", "records", "commitMode"],
+      "steps": [
+        {"operation": "resources.read", "arguments": "$input.read"},
+        {"operation": "content.preview", "arguments": {"records": "$input.records"}},
+        {"operation": "content.apply", "arguments": {"previewId": "$output.1.previewId", "commitMode": "$input.commitMode"}, "waitForJob": true}
+      ]
+    },
+    {
+      "id": "catalog-batched-import",
+      "title": "整包预检、分批导入与接续",
+      "description": "整包预检后分批提交；停止、重启和继续由持久批次及回执核对。",
+      "requiredInputs": ["package", "allowPartial"],
+      "steps": [
+        {"operation": "catalog.preview", "arguments": {"package": "$input.package", "allowPartial": "$input.allowPartial"}},
+        {"operation": "catalog.apply", "arguments": {"previewId": "$output.0.previewId", "commitMode": "batched"}, "waitForJob": true},
+        {"operation": "jobs.read", "arguments": {"id": "$output.1.id"}, "waitForJob": true},
+        {"operation": "jobs.batches", "arguments": {"id": "$output.1.id", "page": 1, "limit": 96}}
+      ]
+    },
+    {
+      "id": "translation-roundtrip",
+      "title": "翻译导出、外部等待、导入与验收",
+      "description": "导出翻译包，明确等待外部结果，再预览、分批导入并核对缺段。",
+      "requiredInputs": ["scope", "resourceId"],
+      "steps": [
+        {"operation": "translations.export", "arguments": "$input.scope"},
+        {"operation": "jobs.read", "arguments": {"id": "$output.0.id"}, "waitForJob": true},
+        {"operation": "translations.preview", "arguments": {"content": "$external.translationResults"}, "externalKey": "translationResults"},
+        {"operation": "translations.import", "arguments": {"previewId": "$output.2.previewId", "commitMode": "batched"}, "waitForJob": true},
+        {"operation": "jobs.read", "arguments": {"id": "$output.3.id"}, "waitForJob": true},
+        {"operation": "translations.tasks", "arguments": {"resourceId": "$input.resourceId", "status": "pending", "page": 1, "limit": 96}}
+      ]
+    },
+    {
+      "id": "issue-task-handoff",
+      "title": "资料问题、任务领取与交接接续",
+      "description": "查询资料问题，创建有验收条件的任务，领取后保存检查点并生成交接包。",
+      "requiredInputs": ["issueFilter", "task", "owner", "checkpoint"],
+      "steps": [
+        {"operation": "issues.list", "arguments": "$input.issueFilter"},
+        {"operation": "tasks.create", "arguments": "$input.task"},
+        {"operation": "tasks.claim", "arguments": {"id": "$output.1.id", "owner": "$input.owner"}},
+        {"operation": "tasks.checkpoint", "arguments": {"lease": "$output.2.lease", "checkpoint": "$input.checkpoint"}},
+        {"operation": "tasks.context", "arguments": {"id": "$output.1.id"}}
+      ]
+    }
+  ]
+}

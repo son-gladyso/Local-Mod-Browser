@@ -1,0 +1,8 @@
+[
+  {
+    "key": "demo",
+    "title": "Demo Game",
+    "root": "../examples/demo-game",
+    "outputDir": "../examples/demo-game"
+  }
+]

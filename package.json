@@ -1,0 +1,13 @@
+{
+  "name": "local-mod-browser-tests",
+  "private": true,
+  "version": "2.5.0",
+  "description": "Optional browser acceptance dependencies for Local MOD Browser",
+  "devDependencies": {
+    "playwright": "1.63.0"
+  },
+  "scripts": {
+    "check": "node --check static/app.js && node --check static/editor.js && node --check tests/browser.cjs",
+    "install-browser": "playwright install chromium"
+  }
+}

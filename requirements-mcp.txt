@@ -1,0 +1,2 @@
+# Optional adapter only. Core service remains standard-library-only.
+mcp==2.2.0
