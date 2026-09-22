@@ -52,7 +52,8 @@ failure-path tests and an explanation of the evidence in the pull request.
 
 ### Review and merge policy
 
-- `main` is protected. Direct pushes and force-pushes are disabled.
+- `main` is protected. Contributor changes must arrive through a pull request;
+  force-pushes and branch deletion are disabled.
 - At least one approving review is required before merge.
 - The repository owner reviews every PR; code owners are defined in
   [`.github/CODEOWNERS`](.github/CODEOWNERS).
