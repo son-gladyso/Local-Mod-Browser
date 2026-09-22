@@ -1,6 +1,17 @@
 # Contributing
 
-Thanks for helping improve Local MOD Browser.
+Thanks for helping improve Local MOD Browser. Pull requests are welcome, but every
+change is reviewed before it can merge into `main`.
+
+## Before opening a pull request
+
+Please open an Issue first for a large feature, a data-model change, a new source
+adapter, or a behavior that could affect compatibility. Small fixes and documentation
+improvements can go straight to a PR.
+
+Keep the change focused and describe the user problem, the design choice, and the
+evidence that supports it. A PR is easier to review when it contains one coherent
+change instead of a mixture of refactors, formatting, and unrelated features.
 
 ## Development setup
 
@@ -38,3 +49,19 @@ failure-path tests and an explanation of the evidence in the pull request.
 - Update contracts, CLI, schemas and documentation together.
 - Do not weaken SQLite durability settings to improve benchmark numbers.
 - Confirm that `git status --ignored` contains no material that belongs in Git.
+
+### Review and merge policy
+
+- `main` is protected. Direct pushes and force-pushes are disabled.
+- At least one approving review is required before merge.
+- The repository owner reviews every PR; code owners are defined in
+  [`.github/CODEOWNERS`](.github/CODEOWNERS).
+- CI must pass, review conversations must be resolved, and stale approvals may be
+  dismissed when new commits change the reviewed code.
+- Maintainers may request changes, ask for a smaller scope, or close a PR that does
+  not meet the privacy, licensing, security, or compatibility boundaries.
+- Approval is not automatic: a passing CI run means the code is testable, not that it
+  is accepted for release.
+
+Please do not pressure reviewers to merge quickly. The project values a small,
+auditable history and safe local-data handling over a high change count.
