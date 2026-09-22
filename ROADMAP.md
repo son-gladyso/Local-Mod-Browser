@@ -36,4 +36,8 @@ dates; priorities can change when real user feedback exposes a more important pr
 
 Open an Issue with a concrete problem, a minimal reproduction, and the behavior you
 would consider successful. Small documentation and test improvements are especially
-good first contributions; look for the `good first issue` label.
+good first contributions; look for the `good first issue` label. Current starter tasks:
+
+- [Add a first-run FAQ](https://github.com/son-gladyso/Local-Mod-Browser/issues/3)
+- [Improve empty and error states](https://github.com/son-gladyso/Local-Mod-Browser/issues/1)
+- [Document and validate source files](https://github.com/son-gladyso/Local-Mod-Browser/issues/2)

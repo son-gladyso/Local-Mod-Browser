@@ -12,7 +12,7 @@
 > recoverable workspace that can safely cooperate with AI—without uploading your
 > private inventory to a cloud service.
 
-[Get started](#five-minute-quick-start) · [AI and CLI](#ai-and-cli) · [Security boundary](#privacy-and-security) · [Open an issue](https://github.com/son-gladyso/Local-Mod-Browser/issues)
+[Get started](#five-minute-quick-start) · [Download v2.5.1](https://github.com/son-gladyso/Local-Mod-Browser/releases/tag/v2.5.1) · [AI and CLI](#ai-and-cli) · [Security boundary](#privacy-and-security) · [Open an issue](https://github.com/son-gladyso/Local-Mod-Browser/issues)
 
 ## What it is
 
@@ -116,6 +116,10 @@ python tools\bootstrap_runtime.py
 You can also double-click `启动MOD浏览器.cmd`. The launcher prints a local URL.
 The example configuration points at fictional demo metadata, so you can explore
 the workflow without providing a private collection first.
+
+If you prefer a direct download, use the [v2.5.1 Release](https://github.com/son-gladyso/Local-Mod-Browser/releases/tag/v2.5.1)
+and download `Local-Mod-Browser-2.5.1-source.zip`. The accompanying
+`SHA256SUMS.txt` lets you verify the archive.
 
 ### 3. Point it at your own metadata
 

@@ -13,7 +13,7 @@
 > 用一个本地、可搜索、可恢复、能与 AI 协作的资料工作台，把“我记得有这个 MOD”变成
 > “我能在几秒内找到它、核对它、继续处理它”。
 
-[立即开始](#五分钟开始使用) · [查看 AI 接口](#cli-与-ai-协作) · [了解安全边界](#安全边界与隐私设计) · [提交建议](https://github.com/son-gladyso/Local-Mod-Browser/issues)
+[立即开始](#五分钟开始使用) · [下载 v2.5.1](https://github.com/son-gladyso/Local-Mod-Browser/releases/tag/v2.5.1) · [查看 AI 接口](#cli-与-ai-协作) · [了解安全边界](#安全边界与隐私设计) · [提交建议](https://github.com/son-gladyso/Local-Mod-Browser/issues)
 
 ## 把散落在硬盘里的 MOD，变成真正可用的个人资料库
 
@@ -147,6 +147,9 @@ python tools\bootstrap_runtime.py
 
 也可以双击仓库里的 `启动MOD浏览器.cmd`。启动器会输出本机地址；打开后即可查看虚构演示
 目录和空库流程。首次启动不需要准备真实 MOD 库。
+
+如果你只想下载当前公开源码，可直接使用 [v2.5.1 Release](https://github.com/son-gladyso/Local-Mod-Browser/releases/tag/v2.5.1)
+中的 `Local-Mod-Browser-2.5.1-source.zip`，旁边的 `SHA256SUMS.txt` 可用于校验文件完整性。
 
 ### 3. 接入自己的目录
 
