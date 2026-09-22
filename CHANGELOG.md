@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.5.2 - 2026-09-22
+
+- Added a reproducible public Demo walkthrough with eight fictional records.
+- Added real browser screenshots for desktop, detail, search, and narrow-screen views.
+- Added a before/after catalog illustration and a compact project logo.
+
+The API contract remains `2.5.0`; this patch release adds public demonstration assets
+and does not change the local protocol.
+
 ## 2.5.1 - 2026-09-22
 
 - Added a complete English README and a project social-preview asset.

@@ -2,6 +2,8 @@
 
 [English README](README.en.md)
 
+<p align="center"><img src="docs/assets/logo-small.png" alt="Local MOD Browser logo" width="112"></p>
+
 ![Windows](https://img.shields.io/badge/Windows-10%2F11-0078D6?logo=windows&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-2ea44f)
@@ -13,7 +15,7 @@
 > 用一个本地、可搜索、可恢复、能与 AI 协作的资料工作台，把“我记得有这个 MOD”变成
 > “我能在几秒内找到它、核对它、继续处理它”。
 
-[立即开始](#五分钟开始使用) · [下载 v2.5.1](https://github.com/son-gladyso/Local-Mod-Browser/releases/tag/v2.5.1) · [查看 AI 接口](#cli-与-ai-协作) · [了解安全边界](#安全边界与隐私设计) · [提交建议](https://github.com/son-gladyso/Local-Mod-Browser/issues)
+[立即开始](#五分钟开始使用) · [下载 v2.5.2](https://github.com/son-gladyso/Local-Mod-Browser/releases/tag/v2.5.2) · [查看 AI 接口](#cli-与-ai-协作) · [了解安全边界](#安全边界与隐私设计) · [提交建议](https://github.com/son-gladyso/Local-Mod-Browser/issues)
 
 ## 把散落在硬盘里的 MOD，变成真正可用的个人资料库
 
@@ -39,6 +41,21 @@ Local MOD Browser 是一个面向 Windows 的本地 MOD 目录浏览器、资料
                          网页、CLI、MCP 共用同一套本地 API
 ```
 
+## 先看成品，再决定要不要安装
+
+这些截图来自仓库内的 **8 条纯虚构 Demo 记录**，不包含真实 MOD、游戏素材或第三方站点数据。
+它们展示的是公开版启动后的真实界面，而不是设计稿：
+
+![公开 Demo 的资料卡片与筛选界面](docs/assets/demo-browse.png)
+
+![公开 Demo 的详情面板](docs/assets/demo-detail.png)
+
+![公开 Demo 的关键词搜索结果](docs/assets/demo-search.png)
+
+![公开 Demo 的窄屏布局](docs/assets/demo-mobile.png)
+
+完整的可复现操作步骤见 [`docs/demo-walkthrough.md`](docs/demo-walkthrough.md)。
+
 ### 30 秒判断它是不是你需要的工具
 
 | 如果你想要…… | Local MOD Browser 的答案 |
@@ -61,6 +78,8 @@ Local MOD Browser 是一个面向 Windows 的本地 MOD 目录浏览器、资料
 它不是 MOD 下载站、安装器、破解工具或远程托管服务。它也不会替你判断某个 MOD 是否
 安全、兼容或获得授权；它负责把你已经拥有且有权使用的资料组织好，让每次修改都更可见、
 更可控。
+
+![使用前后对比：从散落文件夹到本地资料库](docs/assets/before-after.svg)
 
 > English summary: Local MOD Browser is a privacy-first, local-only catalog and
 > workflow platform for Windows. It indexes metadata supplied by the user and
@@ -148,8 +167,8 @@ python tools\bootstrap_runtime.py
 也可以双击仓库里的 `启动MOD浏览器.cmd`。启动器会输出本机地址；打开后即可查看虚构演示
 目录和空库流程。首次启动不需要准备真实 MOD 库。
 
-如果你只想下载当前公开源码，可直接使用 [v2.5.1 Release](https://github.com/son-gladyso/Local-Mod-Browser/releases/tag/v2.5.1)
-中的 `Local-Mod-Browser-2.5.1-source.zip`，旁边的 `SHA256SUMS.txt` 可用于校验文件完整性。
+如果你只想下载当前公开源码，可直接使用 [v2.5.2 Release](https://github.com/son-gladyso/Local-Mod-Browser/releases/tag/v2.5.2)
+中的 `Local-Mod-Browser-2.5.2-source.zip`，旁边的 `SHA256SUMS.txt` 可用于校验文件完整性。
 
 ### 3. 接入自己的目录
 
@@ -245,7 +264,7 @@ Local-Mod-Browser/
 
 ## 版本、路线与贡献
 
-当前公开版本为 `v2.5.0`，API 契约为 `2.5.0`。项目优先关注：
+当前公开版本为 `v2.5.2`，API 契约为 `2.5.0`。项目优先关注：
 
 - 让本地资料整理更快、更容易复核，而不是扩大数据收集范围。
 - 保持 API、CLI 和 MCP 的行为一致，并让失败可以解释、可以恢复。

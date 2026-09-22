@@ -1,7 +1,7 @@
 {
   "name": "local-mod-browser-tests",
   "private": true,
-  "version": "2.5.1",
+  "version": "2.5.2",
   "description": "Optional browser acceptance dependencies for Local MOD Browser",
   "devDependencies": {
     "playwright": "1.63.0"

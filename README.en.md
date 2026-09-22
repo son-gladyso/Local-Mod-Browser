@@ -1,5 +1,7 @@
 # Local MOD Browser
 
+<p align="center"><img src="docs/assets/logo-small.png" alt="Local MOD Browser logo" width="112"></p>
+
 ![Windows](https://img.shields.io/badge/Windows-10%2F11-0078D6?logo=windows&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-2ea44f)
@@ -12,7 +14,7 @@
 > recoverable workspace that can safely cooperate with AI—without uploading your
 > private inventory to a cloud service.
 
-[Get started](#five-minute-quick-start) · [Download v2.5.1](https://github.com/son-gladyso/Local-Mod-Browser/releases/tag/v2.5.1) · [AI and CLI](#ai-and-cli) · [Security boundary](#privacy-and-security) · [Open an issue](https://github.com/son-gladyso/Local-Mod-Browser/issues)
+[Get started](#five-minute-quick-start) · [Download v2.5.2](https://github.com/son-gladyso/Local-Mod-Browser/releases/tag/v2.5.2) · [AI and CLI](#ai-and-cli) · [Security boundary](#privacy-and-security) · [Open an issue](https://github.com/son-gladyso/Local-Mod-Browser/issues)
 
 ## What it is
 
@@ -32,6 +34,24 @@ Your metadata → index and search → details / tags / file comparison → favo
                                                ↓
                          browser, CLI and MCP over one local API
 ```
+
+## See the product before installing
+
+These screenshots come from the repository's **eight fictional Demo records**.
+They contain no real MOD, game asset, or third-party site data; they show the actual
+public build after startup rather than a design mockup.
+
+![Public demo catalog with filters](docs/assets/demo-browse.png)
+
+![Public demo detail panel](docs/assets/demo-detail.png)
+
+![Public demo keyword search](docs/assets/demo-search.png)
+
+![Public demo narrow-screen layout](docs/assets/demo-mobile.png)
+
+See the reproducible walkthrough in [`docs/demo-walkthrough.md`](docs/demo-walkthrough.md).
+
+![Before and after: scattered folders become a local catalog](docs/assets/before-after.svg)
 
 ## Why people use it
 
@@ -117,8 +137,8 @@ You can also double-click `启动MOD浏览器.cmd`. The launcher prints a local 
 The example configuration points at fictional demo metadata, so you can explore
 the workflow without providing a private collection first.
 
-If you prefer a direct download, use the [v2.5.1 Release](https://github.com/son-gladyso/Local-Mod-Browser/releases/tag/v2.5.1)
-and download `Local-Mod-Browser-2.5.1-source.zip`. The accompanying
+If you prefer a direct download, use the [v2.5.2 Release](https://github.com/son-gladyso/Local-Mod-Browser/releases/tag/v2.5.2)
+and download `Local-Mod-Browser-2.5.2-source.zip`. The accompanying
 `SHA256SUMS.txt` lets you verify the archive.
 
 ### 3. Point it at your own metadata
