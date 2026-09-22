@@ -6,6 +6,13 @@
 ![Contract](https://img.shields.io/badge/API%20contract-2.5.0-6f42c1)
 [![CI](https://github.com/son-gladyso/Local-Mod-Browser/actions/workflows/ci.yml/badge.svg)](https://github.com/son-gladyso/Local-Mod-Browser/actions/workflows/ci.yml)
 
+> **你的 MOD 库，不该只是几个越来越大的文件夹。**
+>
+> 用一个本地、可搜索、可恢复、能与 AI 协作的资料工作台，把“我记得有这个 MOD”变成
+> “我能在几秒内找到它、核对它、继续处理它”。
+
+[立即开始](#五分钟开始使用) · [查看 AI 接口](#cli-与-ai-协作) · [了解安全边界](#安全边界与隐私设计) · [提交建议](https://github.com/son-gladyso/Local-Mod-Browser/issues)
+
 ## 把散落在硬盘里的 MOD，变成真正可用的个人资料库
 
 Local MOD Browser 是一个面向 Windows 的本地 MOD 目录浏览器、资料工作台和 AI 协作平台。
@@ -29,6 +36,29 @@ Local MOD Browser 是一个面向 Windows 的本地 MOD 目录浏览器、资料
                                       ↓
                          网页、CLI、MCP 共用同一套本地 API
 ```
+
+### 30 秒判断它是不是你需要的工具
+
+| 如果你想要…… | Local MOD Browser 的答案 |
+| --- | --- |
+| 把多个游戏、多个硬盘的 MOD 放进同一个搜索入口 | 配置多个本地来源，统一建立可查询索引 |
+| 只挑选某个 MOD 的一个准确文件 | 详情页提供文件级比较与精确选择，不默认整套加入搭配 |
+| 让翻译或资料整理可以暂停后继续 | 分段任务、租约、回执、事件游标与恢复流程 |
+| 让 AI 帮忙，但不上传私人库存 | 本地 HTTP / CLI / MCP，共享同一契约，默认只监听回环地址 |
+| 迁移系统或升级后还能找回自己的工作 | 配对备份、恢复日志、版本历史与稳定资源身份 |
+
+### 它适合谁？
+
+- 有多个游戏、多个 MOD 来源或长期积累的个人玩家。
+- 需要反复查找、比较、翻译、整理 MOD 资料的内容创作者和维护者。
+- 想让 AI 协助做资料工作，但希望数据留在自己的电脑上的用户。
+- 喜欢可复现、可检查、能恢复，而不是“点一下然后祈祷”的自动化工具的人。
+
+### 它不是什么？
+
+它不是 MOD 下载站、安装器、破解工具或远程托管服务。它也不会替你判断某个 MOD 是否
+安全、兼容或获得授权；它负责把你已经拥有且有权使用的资料组织好，让每次修改都更可见、
+更可控。
 
 > English summary: Local MOD Browser is a privacy-first, local-only catalog and
 > workflow platform for Windows. It indexes metadata supplied by the user and
@@ -219,6 +249,9 @@ Local-Mod-Browser/
 
 欢迎提交 Issue、改进文档和 Pull Request。请先阅读 [CONTRIBUTING.md](CONTRIBUTING.md)，
 不要提交个人路径、库存、数据库、截图中的令牌或任何未获授权的第三方内容。
+
+如果它解决了你的一个真实问题，欢迎点一个 Star、分享给同样被“MOD 文件夹失控”困扰的人，
+或者提交一个具体的 Issue。对开源项目来说，一条清晰的使用反馈比一句“看起来不错”更有帮助。
 
 ## 许可证
 
