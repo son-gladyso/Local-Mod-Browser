@@ -12,6 +12,7 @@ node_modules/
 .ruff_cache/
 .pytest_cache/
 .env*
+.github-social-state.json
 *.log
 diagnostics/
 .runtime/
