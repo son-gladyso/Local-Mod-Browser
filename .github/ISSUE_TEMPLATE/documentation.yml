@@ -1,0 +1,25 @@
+name: Documentation improvement
+description: Improve setup, FAQ, examples, or contributor documentation.
+title: "docs: "
+labels:
+  - documentation
+  - good first issue
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping make the first run clearer.
+  - type: textarea
+    id: gap
+    attributes:
+      label: What is unclear?
+      description: Link to the section and explain what a new user would misunderstand.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Suggested improvement
+      description: Describe the wording, example, or screenshot that would help.
+    validations:
+      required: true

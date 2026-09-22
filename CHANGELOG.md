@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.5.1 - 2026-09-22
+
+- Added a complete English README and a project social-preview asset.
+- Added a public roadmap, documentation issue template, CODEOWNERS, and reviewed-PR guidance.
+- Added a source ZIP release workflow for easier first-time downloads.
+
+The API contract remains `2.5.0`; this patch release improves public packaging,
+documentation, and contribution ergonomics without changing the contract.
+
 ## 2.5.0 - 2026-09-21
 
 - Added a unified 70-operation HTTP/CLI/MCP contract.

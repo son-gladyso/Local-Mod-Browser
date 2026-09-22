@@ -1,5 +1,7 @@
 # Local MOD Browser
 
+[English README](README.en.md)
+
 ![Windows](https://img.shields.io/badge/Windows-10%2F11-0078D6?logo=windows&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-2ea44f)
