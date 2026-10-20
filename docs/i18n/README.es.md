@@ -4,6 +4,8 @@
 
 Estas opciones de idioma traducen el README, no la interfaz de la aplicación ni todas las guías enlazadas.
 
+**Estado de la versión (2026-10-20):** La próxima versión está en pruebas de aceptación independientes y todavía no se ha publicado. La versión pública actual sigue siendo `v2.5.2` (contrato de API `2.5.0`); los pasos de instalación, las funciones y los límites de seguridad que se describen a continuación corresponden a esa versión pública. Las funciones nuevas de la versión candidata o de las capturas del entorno local de los usuarios no deben considerarse disponibles en la versión pública.
+
 <p align="center"><img src="../../docs/assets/logo-small.png" alt="Logotipo de Local MOD Browser" width="112"></p>
 
 ![Windows](https://img.shields.io/badge/Windows-10%2F11-0078D6?logo=windows&logoColor=white)

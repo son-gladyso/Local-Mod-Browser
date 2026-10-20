@@ -4,6 +4,8 @@
 
 这些语言选项翻译的是 README，不代表应用界面或所有链接指南已经多语言化。
 
+**版本状态（2026-10-20）：** 下一版正在独立验收，尚未发布。当前公开版本仍为 `v2.5.2`（API 契约 `2.5.0`）；下文安装步骤、功能和安全边界均针对当前公开版。开发候选及用户本地截图中的新功能，不应视为已随公开版提供。
+
 <p align="center"><img src="docs/assets/logo-small.png" alt="Local MOD Browser logo" width="112"></p>
 
 ![Windows](https://img.shields.io/badge/Windows-10%2F11-0078D6?logo=windows&logoColor=white)

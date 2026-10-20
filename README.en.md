@@ -4,6 +4,8 @@
 
 These language options translate the README, not the application interface or every linked guide.
 
+**Version status (2026-10-20):** The next version is undergoing separate acceptance testing and has not been released. The current public release remains `v2.5.2` (API contract `2.5.0`); the installation steps, features and security boundaries below describe that public version. New features in the development candidate or users’ local screenshots should not be treated as available in the public release.
+
 <p align="center"><img src="docs/assets/logo-small.png" alt="Local MOD Browser logo" width="112"></p>
 
 ![Windows](https://img.shields.io/badge/Windows-10%2F11-0078D6?logo=windows&logoColor=white)

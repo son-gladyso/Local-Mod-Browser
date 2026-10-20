@@ -4,6 +4,8 @@
 
 이 언어 선택은 README 번역에만 적용됩니다. 앱 화면이나 연결된 모든 가이드가 다국어를 지원한다는 뜻은 아닙니다.
 
+**버전 상태(2026-10-20):** 다음 버전은 별도의 인수 검증을 진행 중이며 아직 출시되지 않았습니다. 현재 공개 버전은 여전히 `v2.5.2`(API 계약 `2.5.0`)입니다. 아래 설치 절차, 기능 및 보안 경계는 현재 공개 버전을 설명합니다. 개발 후보나 사용자 로컬 환경의 스크린샷에 나타난 새 기능을 공개 버전에서 제공되는 기능으로 간주하지 마세요.
+
 <p align="center"><img src="../assets/logo-small.png" alt="Local MOD Browser 로고" width="112"></p>
 
 ![Windows](https://img.shields.io/badge/Windows-10%2F11-0078D6?logo=windows&logoColor=white)
