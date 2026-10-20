@@ -1,5 +1,7 @@
 # Local MOD Browser
 
+[中文 README](README.md)
+
 <p align="center"><img src="docs/assets/logo-small.png" alt="Local MOD Browser logo" width="112"></p>
 
 ![Windows](https://img.shields.io/badge/Windows-10%2F11-0078D6?logo=windows&logoColor=white)
@@ -11,8 +13,8 @@
 > **Your MOD library should not be a pile of folders you are afraid to touch.**
 >
 > Local MOD Browser turns scattered local metadata into a searchable, comparable,
-> recoverable workspace that can safely cooperate with AI—without uploading your
-> private inventory to a cloud service.
+> recoverable workspace with local AI interfaces. The service itself does not upload
+> your private inventory; any external AI client has its own data-sharing behavior.
 
 [Get started](#five-minute-quick-start) · [Download v2.5.2](https://github.com/son-gladyso/Local-Mod-Browser/releases/tag/v2.5.2) · [AI and CLI](#ai-and-cli) · [Security boundary](#privacy-and-security) · [Open an issue](https://github.com/son-gladyso/Local-Mod-Browser/issues)
 
@@ -52,6 +54,26 @@ public build after startup rather than a design mockup.
 See the reproducible walkthrough in [`docs/demo-walkthrough.md`](docs/demo-walkthrough.md).
 
 ![Before and after: scattered folders become a local catalog](docs/assets/before-after.svg)
+
+### User-supplied screenshots from actual use
+
+The following images show the user's own local library, including browsing, filtering, and detail views with a larger collection. They are not bundled data or the reproducible eight-record demo above. Item counts, game counts, and thumbnails reflect the user's environment at capture time, not content included when you install this project.
+
+![Actual use: multi-game MOD library](docs/assets/real-use/library-overview.png)
+
+*Card browsing across the user's multi-game library.*
+
+![Actual use: filter by purpose](docs/assets/real-use/purpose-filters.png)
+
+*Purpose-based filtering while keeping the catalog context visible.*
+
+![Actual use: MOD detail panel](docs/assets/real-use/mod-detail-panel.png)
+
+*Inspecting a single entry beside the current catalog view.*
+
+See the [actual-use gallery](docs/real-use-gallery.md#english) for all six images and their state notes. The AI & Task Center and Download Center images record visible states in the user's local interface. They do not prove a successful task or download, or establish that the same features are included in the current public source or release.
+
+Game and MOD names and thumbnails in these images may involve third-party rights. They do not become MIT-licensed merely because the project code uses MIT. This gallery does not distribute the underlying MODs, game assets, or source library, and does not grant permission to reuse third-party content.
 
 ## Why people use it
 
@@ -96,11 +118,13 @@ See the reproducible walkthrough in [`docs/demo-walkthrough.md`](docs/demo-walkt
 ## Privacy and security
 
 - Only metadata supplied by you is indexed.
-- The repository contains no private inventories, MOD archives, personal databases,
-  backups, exports, runtime tokens, or third-party site snapshots.
+- The repository does not bundle users’ source inventories, MOD archives, personal
+  databases, backups, exports, or runtime tokens. Selected user-supplied interface
+  screenshots are documented separately, not supplied as test data or content downloads.
 - The service does not download, redistribute, install, or execute MOD files.
 - The default listener is loopback-only; it is not designed as a LAN or public service.
-- Runtime, database, diagnostics, exports, and test results are ignored by Git.
+- Default paths for runtime, database, diagnostics, exports, and test results are ignored by Git. This does not protect already-tracked files, force-added files, or data saved elsewhere; review staged changes before committing.
+- Optional MCP is a local protocol interface, not an automatic remote-model connection. An external AI client may send retrieved data to its provider; check its settings and authorized scope before connecting.
 - Use any third-party source only within its terms, API policy, and content license.
 
 Read the [security policy](SECURITY.md), [contribution guide](CONTRIBUTING.md), and
@@ -174,6 +198,38 @@ See [`config/sources.example.json`](config/sources.example.json) and the fiction
 Open `/api/docs` for the machine-readable contract and `/api/health` for runtime,
 database, and service status.
 
+## What does a first successful run look like?
+
+Start with the fictional records: launch the service, open its local URL, search for a sample entry, inspect its details, and return to the list. You can check this small browsing loop before importing a personal collection.
+
+Prepare Windows 10/11 x64, a system Python that can run the bootstrap script, and network access for the first pinned-runtime download. Ordinary browsing does not require AI or MCP. Developer test dependencies are documented separately in [CONTRIBUTING.md](CONTRIBUTING.md).
+
+**Success means:** the fictional catalog is visible, search and detail views can be used, and the result of `ai.py doctor` can be inspected. Loading a page alone does not verify your source configuration, recovery behavior, or every platform operation.
+
+## Common questions
+
+**Why is the large library from the screenshots not included?** Those images were supplied from the user's actual environment. The bundled demo contains eight fictional records; configure your own sources separately.
+
+**Will it discover and understand every MOD on my drives?** No. The documented input is a source configuration and a `catalog-data.json` in each `outputDir`, not universal interpretation of arbitrary folders. Check the [configuration example](config/sources.example.json) first.
+
+**Why is the catalog empty?** Check whether `data\sources.json` is valid, which configuration directory relative paths resolve from, and whether each `outputDir` contains `catalog-data.json`. Follow the [user guide](docs/user-guide.md); do not upload a personal database to an issue.
+
+**Is an AI connection required?** No. The browser and CLI can be used directly. Optional MCP is a local interface, not an automatic cloud-model connection. An external client you choose has its own data boundary.
+
+**Does the real-use Download Center image prove the public version downloads MODs?** No. It shows the user's local interface with an empty list and Nexus disconnected. The public version is described here as not downloading, installing, or executing MOD files.
+
+**Can I expose it to other devices or the internet?** The default listener is `127.0.0.1`; it is not designed as a LAN or public service. Platforms other than Windows are currently outside the supported scope.
+
+### Find the code for your change
+
+- Browsing and interaction: start in `static/`; cover list/detail navigation, empty/error states, and narrow layouts.
+- Sources and search: start in `catalog.py` and the example configuration; use synthetic valid and invalid inputs.
+- Platform operations: read `contracts.py`, `platform_api.py`, and corresponding tests together; keep HTTP, CLI, and MCP behavior aligned.
+- Persistence or background jobs: read the [architecture](docs/architecture.md) first; cover interruption, retry, and recovery without weakening durability for speed.
+
+See the [contribution guide](CONTRIBUTING.md) for commands and PR requirements, and [Roadmap and contributing](#roadmap-and-contributing) for existing starter tasks.
+
+
 ## AI and CLI
 
 The CLI is a stable entry point for scripts and assistants:
@@ -245,9 +301,20 @@ If this project solves a real problem for you, a Star or a concrete Issue helps 
 people discover it. A small reproducible report is more valuable than a vague feature
 request—and every accepted improvement stays reviewable in the public history.
 
+### Start with one small improvement
+
+For a first contribution, consider one of these existing issues:
+
+- [First-run FAQ (#3)](https://github.com/son-gladyso/Local-Mod-Browser/issues/3): explain runtime setup, source configuration, and missing catalog files with a verification step for each failure.
+- [Source configuration documentation and validation (#2)](https://github.com/son-gladyso/Local-Mod-Browser/issues/2): document fields and relative paths, then cover invalid input with synthetic tests.
+- [Accessible empty and error states (#1)](https://github.com/son-gladyso/Local-Mod-Browser/issues/1): help keyboard and screen-reader users understand the current state and what to do next.
+
+Check the latest discussion and issue status before choosing a scope. Small documentation fixes can go straight to a pull request; discuss larger features, data-model changes, and source adapters first as described in the contribution guide. You do not need to share your own MOD inventory to contribute.
+
 ## License
 
 Project code is released under the [MIT License](LICENSE). See
 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) for pinned runtime and optional
 dependency notices. The MIT license does not grant rights to MODs, game assets,
 site data, author text, or other third-party content.
+
