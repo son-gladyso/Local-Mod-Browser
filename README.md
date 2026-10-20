@@ -1,6 +1,8 @@
 # Local MOD Browser
 
-[English README](README.en.md)
+[简体中文](README.md) · [English](README.en.md) · [日本語](docs/i18n/README.ja.md) · [한국어](docs/i18n/README.ko.md) · [Español](docs/i18n/README.es.md) · [Français](docs/i18n/README.fr.md) · [Deutsch](docs/i18n/README.de.md) · [Português (Brasil)](docs/i18n/README.pt-BR.md)
+
+这些语言选项翻译的是 README，不代表应用界面或所有链接指南已经多语言化。
 
 <p align="center"><img src="docs/assets/logo-small.png" alt="Local MOD Browser logo" width="112"></p>
 
@@ -14,6 +16,8 @@
 >
 > 用一个本地、可搜索、可恢复、能与 AI 协作的资料工作台，把“我记得有这个 MOD”变成
 > “我能在几秒内找到它、核对它、继续处理它”。
+>
+> **下载过一些 MOD，却忘了当初为什么下载、它们各自有什么功能？** 已有的摘要、功能说明与标签能帮你找回上下文；也可以手动把今后的使用计划写进搭配备注。浏览器不会自动推断你当初的下载动机。
 
 [立即开始](#五分钟开始使用) · [下载 v2.5.2](https://github.com/son-gladyso/Local-Mod-Browser/releases/tag/v2.5.2) · [查看 AI 接口](#cli-与-ai-协作) · [了解安全边界](#安全边界与隐私设计) · [提交建议](https://github.com/son-gladyso/Local-Mod-Browser/issues)
 
@@ -25,6 +29,7 @@ Local MOD Browser 是一个面向 Windows 的本地 MOD 目录浏览器、资料
 
 如果你曾经遇到过这些问题，它就是为你准备的：
 
+- 下载过一些 MOD，却记不清各自的功能或当初的用途，需要借助资料库已有的摘要、功能说明与标签重新找回上下文。
 - MOD 分散在多个硬盘、多个游戏和多个备份目录里，想找一个文件要翻很久。
 - 同一个 MOD 有多个版本或副本，无法快速确认差异，也不敢随便覆盖原文件。
 - 浏览器收藏、翻译进度、作者信息和文件清单彼此分离，重新安装后很难恢复。
@@ -40,6 +45,8 @@ Local MOD Browser 是一个面向 Windows 的本地 MOD 目录浏览器、资料
                                       ↓
                          网页、CLI、MCP 共用同一套本地 API
 ```
+
+当前公开源码支持搭配备注，以及 `function`、`details`、`tags` 等 MOD 资料字段的修订；这不等于已有独立的“每个 MOD 的下载原因”笔记字段。找回上下文依赖已有或由你补充的信息，不会自动重建未记录的原始动机。
 
 ## 先看成品，再决定要不要安装
 
@@ -72,6 +79,8 @@ Local MOD Browser 是一个面向 Windows 的本地 MOD 目录浏览器、资料
 
 *在当前浏览页旁查看单个条目的详情。*
 
+另三张截图：[文件与变体](docs/assets/real-use/files-and-variants.png)、[AI 与任务中心](docs/assets/real-use/ai-task-center.png)、[下载中心](docs/assets/real-use/download-center.png)。
+
 完整的六张截图与状态说明见[实际使用图集](docs/real-use-gallery.md)。其中 AI 与任务中心、下载中心仅记录用户本地界面的可见状态；截图不证明任务或下载成功，也不证明相同功能已包含在当前公开源码或发行版中。
 
 截图内的游戏、MOD 名称及缩略图可能涉及第三方权利，不因展示在本仓库中而适用项目代码的 MIT 许可证。图集不提供相关 MOD、游戏素材或原始资料库的下载，也不构成对第三方内容的再使用授权。
@@ -81,6 +90,7 @@ Local MOD Browser 是一个面向 Windows 的本地 MOD 目录浏览器、资料
 | 如果你想要…… | Local MOD Browser 的答案 |
 | --- | --- |
 | 把多个游戏、多个硬盘的 MOD 放进同一个搜索入口 | 配置多个本地来源，统一建立可查询索引 |
+| 记起下载过的 MOD 有什么用 | 回看已有摘要、功能说明与标签，并手动把计划记入搭配备注 |
 | 只挑选某个 MOD 的一个准确文件 | 详情页提供文件级比较与精确选择，不默认整套加入搭配 |
 | 让翻译或资料整理可以暂停后继续 | 分段任务、租约、回执、事件游标与恢复流程 |
 | 让 AI 帮忙，但不上传私人库存 | 本地 HTTP / CLI / MCP，共享同一契约，默认只监听回环地址 |
@@ -234,6 +244,8 @@ python tools\bootstrap_runtime.py
 
 **它会自动扫描并理解硬盘上的所有 MOD 吗？** 不会。当前入口是来源配置与每个 `outputDir` 中的 `catalog-data.json`，不是对任意文件夹的万能识别。先用[配置样例](config/sources.example.json)核对路径与元数据。
 
+**能替我记起当初为什么下载某个 MOD 吗？** 已有摘要、功能说明和标签能帮助你重新判断用途；你可以修订资料，并手动在搭配备注中记录计划。它不能从文件自动推断未记录的原始动机，本文也不承诺存在独立的逐 MOD 下载原因字段。
+
 **为什么列表为空？** 先核对 `data\sources.json` 是否有效、路径以哪个配置目录解析，以及目标 `outputDir` 是否有 `catalog-data.json`。再按[用户指南](docs/user-guide.md)检查服务；不要把私人数据库直接贴进 Issue。
 
 **必须连接 AI 才能浏览吗？** 不需要。网页和 CLI 可以直接使用。可选 MCP 是本地接口，不是自动连接云端模型的开关；你另行选择的外部客户端具有自己的数据边界。
@@ -316,7 +328,7 @@ Local-Mod-Browser/
 
 ## 版本、路线与贡献
 
-当前公开版本为 `v2.5.2`，API 契约为 `2.5.0`。项目优先关注：
+当前公开版本为 `v2.5.2`，API 契约为 `2.5.0`。最新方向见 [`ROADMAP.md`](ROADMAP.md)；文档、可复现测试、无障碍和小范围来源配置改进都适合首次贡献。项目优先关注：
 
 - 让本地资料整理更快、更容易复核，而不是扩大数据收集范围。
 - 保持 API、CLI 和 MCP 的行为一致，并让失败可以解释、可以恢复。
@@ -324,7 +336,7 @@ Local-Mod-Browser/
 - 在明确的内容授权和第三方条款范围内扩展来源适配。
 
 欢迎提交 Issue、改进文档和 Pull Request。请先阅读 [CONTRIBUTING.md](CONTRIBUTING.md)，
-不要提交个人路径、库存、数据库、截图中的令牌或任何未获授权的第三方内容。
+不要提交个人路径、库存、数据库、截图中的令牌或任何未获授权的第三方内容。外部改动需经过审查；合并到 `main` 前须满足 CI、Code Owner 批准、讨论解决、隐私检查与针对性测试要求。
 
 如果它解决了你的一个真实问题，欢迎点一个 Star、分享给同样被“MOD 文件夹失控”困扰的人，
 或者提交一个具体的 Issue。对开源项目来说，一条清晰的使用反馈比一句“看起来不错”更有帮助。
