@@ -9,6 +9,11 @@ const hasSelection=()=>String(window.getSelection?.()||'').trim().length>0;
 const inLibrary=view=>typeof isLibraryView==='function'?isLibraryView(view):['browse','favorites','recent'].includes(view);
 const remember=(key,value)=>{try{if(value===undefined)return localStorage.getItem(key);localStorage.setItem(key,value)}catch{return null}};
 
+// Offsets for the detail panel and the phone drawer follow the real header height.
+const header=document.querySelector('.topbar');
+const syncTopbar=()=>document.documentElement.style.setProperty('--nx-topbar',header.offsetHeight+'px');
+new ResizeObserver(syncTopbar).observe(header);syncTopbar();
+
 // Narrow navigation drawer: a tap outside closes it without also activating what is underneath.
 document.addEventListener('click',event=>{
   const sidebar=$('sidebar');

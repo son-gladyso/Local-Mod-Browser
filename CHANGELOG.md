@@ -17,7 +17,12 @@
   grey tag pills, tile footers with download/endorsement/update stats, a detail masthead that uses
   the MOD's first local image as a banner with an icon stat strip, and file lists grouped into
   主文件 / 可选文件 / … with a header row (upload date, size, version) per file. All styles and
-  icons are written for this project; no third-party CSS, fonts or icons are bundled.
+  icons are written for this project; no Nexus Mods CSS, fonts, icons or images are included.
+
+- Navigation moved from the left sidebar into a Nexus-style top bar: the main menu sits next to the
+  logo (current entry underlined in orange) and a second row switches games; on narrow screens the
+  same entries open as a menu drawer. The bundled Inter font (SIL OFL 1.1) is used for Latin text
+  with the system's CJK font for Chinese, without extra letter spacing or tagline labels.
 
 The API contract is unchanged; these are browser interface improvements only.
 

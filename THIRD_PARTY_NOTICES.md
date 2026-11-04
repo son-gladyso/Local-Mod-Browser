@@ -14,6 +14,16 @@ the binaries are not stored in this repository.
 - SQLite 3.53.4 — public-domain dedication/blessing. Source, archive checksum
   and notice URL are recorded in `runtime-lock.json`.
 
+## Bundled font
+
+- Inter (variable, Latin and Latin Extended subsets), Copyright 2016 The Inter
+  Project Authors — SIL Open Font License 1.1. Files: `static/fonts/inter-*.woff2`,
+  taken unmodified from the `@fontsource-variable/inter` 5.3.0 package; the
+  license text is in `static/fonts/Inter-OFL.txt`.
+
+The interface theme takes visual cues from the Nexus Mods website, but no Nexus
+Mods styles, fonts, icons, images or other assets are included.
+
 ## Optional development dependencies
 
 Packages listed in `requirements-test.txt`, `requirements-mcp.txt`,

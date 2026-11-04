@@ -1088,6 +1088,8 @@ class Handler(BaseHTTPRequestHandler):
                 "/interaction.js": "interaction.js",
                 "/interaction.css": "interaction.css",
                 "/theme.css": "theme.css",
+                "/fonts/inter-latin-wght-normal.woff2": "fonts/inter-latin-wght-normal.woff2",
+                "/fonts/inter-latin-ext-wght-normal.woff2": "fonts/inter-latin-ext-wght-normal.woff2",
                 "/tag-translations.json": "tag-translations.json",
             }
             if path not in files:
@@ -1101,6 +1103,7 @@ class Handler(BaseHTTPRequestHandler):
                     ".js": "text/javascript; charset=utf-8",
                     ".css": "text/css; charset=utf-8",
                     ".json": "application/json; charset=utf-8",
+                    ".woff2": "font/woff2",
                 }[p.suffix],
             )
         except Exception as e:
