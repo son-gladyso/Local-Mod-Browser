@@ -12,6 +12,13 @@
   feedback, a back-to-top button, view switches that land at the top, and tap-outside to close the
   narrow-screen menu.
 
+- New Nexus-inspired visual theme (`static/theme.css`): compact black top bar, dark content canvas
+  with darker navigation bands, classic orange accent, Nexus-style tab bars with orange counts, light
+  grey tag pills, tile footers with download/endorsement/update stats, a detail masthead that uses
+  the MOD's first local image as a banner with an icon stat strip, and file lists grouped into
+  主文件 / 可选文件 / … with a header row (upload date, size, version) per file. All styles and
+  icons are written for this project; no third-party CSS, fonts or icons are bundled.
+
 The API contract is unchanged; these are browser interface improvements only.
 
 ## 2.5.2 - 2026-09-22

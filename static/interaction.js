@@ -77,6 +77,27 @@ document.addEventListener('keydown',event=>{
   if(button.disabled||button.closest('[hidden]'))return;
   event.preventDefault();button.click();
 });
+// Tab counts, like "FILES 4": image records and files of the open MOD.
+function syncTabCounts(){
+  const m=state.detail;
+  for(const [tab,count] of [['images',m?.imageCount],['files',m?.files?.length??m?.fileCount]]){
+    const button=document.querySelector(`#detailTabs [data-tab="${tab}"]`);if(!button)continue;
+    let label=button.querySelector('.tab-count');
+    if(!m||count==null){label?.remove();continue}
+    if(!label){label=document.createElement('span');label.className='tab-count';button.append(label)}
+    label.textContent=String(count);
+  }
+}
+// Hero banner from the MOD's first local image. Applied through CSSOM because the
+// page's Content-Security-Policy (rightly) refuses inline style attributes.
+function syncHero(){
+  const mast=document.querySelector('#detail .detail-masthead'),hero=$('detailHeading').querySelector('.detail-hero[data-hero]');
+  if(!mast)return;
+  mast.classList.toggle('has-cover',Boolean(hero));
+  if(hero)mast.style.setProperty('--hero',`url("${hero.dataset.hero.replace(/["\\\n\r]/g,encodeURIComponent)}")`);
+  else mast.style.removeProperty('--hero');
+}
+new MutationObserver(()=>{syncTabCounts();syncHero()}).observe($('detailHeading'),{childList:true});
 const contextObserver=new MutationObserver(syncDetailContext);
 contextObserver.observe($('cards'),{childList:true});
 contextObserver.observe($('detail'),{attributes:true,attributeFilter:['hidden']});
