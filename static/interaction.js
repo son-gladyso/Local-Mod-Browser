@@ -148,6 +148,30 @@ $('moreFilters').onclick=()=>setAdvanced($('advancedFilters').hidden);
 new MutationObserver(paintAdvanced).observe($('chips'),{childList:true});
 setAdvanced(remember('mod-browser-more-filters')==='1',false);
 
+// Library filter column (Nexus listing style): the 用途 select is mirrored as a checkbox
+// list with counts. The select stays the single source of truth for app.js and tests.
+const category=$('category');
+if(category){
+  const list=document.createElement('div');list.id='categoryList';list.className='facet-list';list.setAttribute('role','group');list.setAttribute('aria-label','用途');
+  const label=category.closest('label');label.classList.add('has-facet-list');label.after(list);
+  const paintCategories=()=>{
+    const options=[...category.options].filter(option=>option.value);
+    list.innerHTML=options.map(option=>{const match=option.textContent.match(/^(.*) \((\d+)\)$/);return `<button type="button" class="facet" data-value="${esc(option.value)}" aria-pressed="${category.value===option.value}"><span class="facet-box" aria-hidden="true"></span><span class="facet-name">${esc(match?match[1]:option.textContent)}</span>${match?`<span class="facet-count">(${match[2]})</span>`:''}</button>`}).join('')||'<p class="muted">暂无用途分类</p>';
+  };
+  list.addEventListener('click',event=>{const button=event.target.closest('.facet');if(!button)return;category.value=category.value===button.dataset.value?'':button.dataset.value;category.dispatchEvent(new Event('change',{bubbles:true}))});
+  new MutationObserver(paintCategories).observe(category,{childList:true});
+  category.addEventListener('change',paintCategories);paintCategories();
+}
+// Desktop "隐藏筛选" toggle above the filter column; phones keep the existing 展开筛选 button.
+const browseView=$('browseView'),filtersPanel=$('filtersPanel');
+if(browseView&&filtersPanel){
+  const hide=document.createElement('button');Object.assign(hide,{type:'button',id:'hideFilters',className:'hide-filters'});
+  hide.setAttribute('aria-controls','filtersPanel');filtersPanel.before(hide);
+  const setHidden=(hidden,save=true)=>{browseView.classList.toggle('filters-hidden',hidden);hide.setAttribute('aria-expanded',String(!hidden));hide.innerHTML=`<svg class="icon" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2.5 4.5h11M4.5 8h7M6.5 11.5h3"/></svg>${hidden?'显示筛选':'隐藏筛选'}`;if(save)remember('mod-browser-hide-filters',hidden?'1':'0')};
+  hide.onclick=()=>setHidden(!browseView.classList.contains('filters-hidden'));
+  setHidden(remember('mod-browser-hide-filters')==='1',false);
+}
+
 // Profiles: the whole card opens it, the open one is marked, empty states point to the next step.
 $('profilesView').addEventListener('click',event=>{
   const card=event.target.closest('.profile-card');

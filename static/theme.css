@@ -74,9 +74,9 @@ select option{background:var(--nx-surface-low);color:var(--nx-text)}
 input:focus,select:focus,textarea:focus{border-color:var(--nx-primary)}
 label{color:var(--nx-text);font-weight:500}
 .check input{accent-color:var(--nx-primary)}
-/* "Sort by" style: light, compact, bold — used for ordering and display options */
-#sort,#pageSize,#language{background:#e1e1e1;border-color:#e1e1e1;color:#383838;font-size:12px;font-weight:600;border-radius:2px}
-#sort option,#pageSize option,#language option{background:#fff;color:#222}
+/* Sort / page-size / language: dark pills as on the Nexus mods listing */
+#sort,#pageSize,#language{background:rgba(255,255,255,.1);border-color:transparent;color:var(--nx-text-moderate);font-size:14px;font-weight:400;border-radius:var(--nx-radius);min-height:36px}
+#sort:hover,#pageSize:hover,#language:hover{background:rgba(255,255,255,.16)}
 @media(min-width:801px){button,select,input:not([type="checkbox"]){min-height:34px}}
 
 /* Top navigation: Nexus-style bar. Row 1 = logo, main menu, search; row 2 = game
@@ -103,7 +103,7 @@ label{color:var(--nx-text);font-weight:500}
   .sidebar{display:contents}
   .sidebar .section-label{display:none}
   .sidebar nav[aria-label="主要功能"]{order:1;display:flex;align-self:stretch;gap:0}
-  .sidebar nav[aria-label="主要功能"] .nav{width:auto;height:56px;min-height:56px;padding:0 13px;background:transparent;color:var(--nx-text-moderate);font-size:15px;justify-content:center}
+  .sidebar nav[aria-label="主要功能"] .nav{width:auto;height:56px;min-height:56px;padding:0 13px;background:transparent;color:var(--nx-text-strong);font-size:16px;font-weight:400;justify-content:center}
   .sidebar nav[aria-label="主要功能"] .nav:hover{background:rgba(255,255,255,.06);color:#fff}
   .sidebar nav[aria-label="主要功能"] .nav.active{background:transparent;color:#fff;box-shadow:inset 0 -3px 0 var(--nx-primary)}
   .global-search{order:2;flex:1 1 220px;max-width:440px;margin-left:auto}
@@ -326,3 +326,63 @@ dialog::backdrop{background:#000000cc}
   .file-stats{width:100%;justify-content:space-between}
   .metrics span:last-child{margin-left:0}
 }
+
+/* Library listing, after the redesigned Nexus mods page ---------------------- */
+/* near-black page, #29292e tiles with a #3e3e47 stats footer, filters in a left column */
+body,main{background:var(--nx-nav)}
+.topbar{border-bottom:1px solid var(--nx-stroke-weak)}
+.heading h1{font-size:36px;font-weight:600;line-height:1.2}
+#resultSummary{font-size:16px;color:var(--nx-text-subdued)}
+.browse-controls label{font-size:0;gap:0}
+.browse-controls select{font-size:14px}
+.card{background:var(--nx-surface-mid);box-shadow:none}
+.card-body{padding:14px 16px 0;gap:8px}
+.card-title{order:1;font-size:18px;font-weight:600;color:#e4e4e7;line-height:1.3}
+.card .original{order:2;font-size:14px;color:var(--nx-text-moderate);-webkit-line-clamp:1}
+.card .game-label{order:3;font-size:14px;color:var(--nx-text-moderate);padding:9px 0;border-top:1px solid var(--nx-stroke-weak);border-bottom:1px solid var(--nx-stroke-weak)}
+.card .card-group{color:var(--nx-text-moderate)}
+.card .summary{order:4;font-size:14px;line-height:1.45;color:var(--nx-text-subdued)}
+.card .badges{order:5}
+.card .card-tag-block{order:6;border-top:0;padding-top:0}
+.metrics{background:var(--nx-surface-higher);background:#3e3e47;color:var(--nx-text-moderate);font-size:14px;padding:10px 16px;margin:12px -16px 0;gap:18px}
+.metrics .icon{width:16px;height:16px}
+.card .card-dates{order:4;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--nx-text-moderate);padding-bottom:9px;border-bottom:1px solid var(--nx-stroke-weak)}
+.card .card-dates .icon{width:16px;height:16px}
+.card .summary{order:5}
+.card .badges{order:6}
+.card .card-tag-block{order:7}
+.card .card-actions{order:8}
+.card .metrics{order:9}
+.metrics span:last-child{margin-left:0}
+@media(min-width:1001px){
+  #browseView{display:grid;grid-template-columns:250px minmax(0,1fr);column-gap:32px;align-items:start;grid-auto-flow:row dense}
+  #browseView>.ui-subnav,#browseView>.heading{grid-column:1/-1}
+  #browseView>.heading{padding-bottom:20px;margin-bottom:20px;border-bottom:1px solid var(--nx-stroke-weak)}
+  #toggleFilters{display:none!important}
+  .hide-filters{grid-column:1;display:inline-flex;align-items:center;gap:8px;justify-self:start;margin-bottom:16px;color:var(--nx-text-strong);border-color:var(--nx-stroke-moderate);font-size:15px;font-weight:400}
+  .hide-filters .icon{width:16px;height:16px}
+  #filtersPanel{grid-column:1;grid-row:span 20;display:block;position:sticky;top:calc(var(--nx-topbar) + 12px);max-height:calc(100vh - var(--nx-topbar) - 24px);overflow-y:auto;background:transparent;border:0;border-radius:0;padding:0 4px 0 0}
+  #browseView>#chips,#browseView>#cards,#browseView>#empty,#browseView>.pagination{grid-column:2}
+  #browseView>#chips{margin-top:0;min-height:36px}
+  #browseView.filters-hidden #filtersPanel{display:none}
+  #browseView.filters-hidden>#cards,#browseView.filters-hidden>#empty,#browseView.filters-hidden>.pagination{grid-column:1/-1}
+  #filtersPanel>label,#filtersPanel .filters-advanced>label{display:block;padding:14px 0;margin:0;border-top:1px solid var(--nx-stroke-weak);font-size:14px;font-weight:600;color:var(--nx-text-strong)}
+  #filtersPanel>label select,#filtersPanel .filters-advanced select,#filtersPanel input[type="date"]{display:block;width:100%;margin-top:10px;font-weight:400}
+  #filtersPanel>label.has-facet-list{padding-bottom:6px}
+  #filtersPanel>label.has-facet-list select{display:none}
+  #filtersPanel .filters-advanced{display:block;padding:0;border:0}
+  #filtersPanel .filters-advanced[hidden]{display:none}
+  #filtersPanel .filters-advanced label.check{display:flex;border-top:0;padding:8px 0;font-weight:400}
+  #filtersPanel .more-filters{width:100%;margin:6px 0 14px;justify-content:center}
+  #filtersPanel .saved-filter-controls{display:flex;flex-wrap:wrap;gap:8px;padding:14px 0;border-top:1px solid var(--nx-stroke-weak)}
+  #filtersPanel .saved-filter-controls select{flex:1 1 100%}
+  .facet-list{display:grid;gap:2px;padding:0 0 12px}
+  .facet{display:flex;align-items:center;gap:12px;width:100%;min-height:34px;padding:4px 0;border:0;background:transparent;color:var(--nx-text-strong);font-size:14px;font-weight:400;text-align:left}
+  .facet:hover,.facet[aria-pressed="true"],.facet[aria-pressed="true"]:hover{background:transparent;color:#fff}
+  .facet-box{width:22px;height:22px;flex:0 0 auto;border:1px solid var(--nx-stroke-moderate);border-radius:var(--nx-radius);background:#09090a;display:grid;place-items:center}
+  .facet:hover .facet-box{border-color:var(--nx-stroke-strong,rgba(255,255,255,.6))}
+  .facet[aria-pressed="true"] .facet-box{background:var(--nx-primary);border-color:var(--nx-primary)}
+  .facet[aria-pressed="true"] .facet-box::after{content:"";width:10px;height:6px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:translateY(-1px) rotate(-45deg)}
+  .facet-count{color:var(--nx-text-subdued)}
+}
+@media(max-width:1000px){.hide-filters,.facet-list{display:none}}

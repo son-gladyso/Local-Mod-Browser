@@ -24,6 +24,10 @@
   same entries open as a menu drawer. The bundled Inter font (SIL OFL 1.1) is used for Latin text
   with the system's CJK font for Chinese, without extra letter spacing or tagline labels.
 
+- The library follows the redesigned Nexus mods listing: near-black page, filters in a left column
+  (用途 as a checkbox list with counts, a 隐藏筛选 toggle), dark sort/page-size pills, and tiles laid out
+  as title, author, category, update date, summary and an endorsement/download footer.
+
 The API contract is unchanged; these are browser interface improvements only.
 
 ## 2.5.2 - 2026-09-22
