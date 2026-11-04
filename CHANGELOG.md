@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased
+
+- Fixed the MOD detail panel: Close and Esc now return to the list even after switching MOD inside the
+  panel, and a page opened from a `?detail=` link closes in place instead of navigating away.
+- The whole card opens the detail preview, the open card is highlighted, and the panel can step to the
+  previous/next MOD on the page with `‹ ›` buttons or the ←/→ keys while keeping the current tab.
+- Buttons that start slow work show progress and ignore repeated presses until the work settles.
+- Everyday filters stay visible while less-used ones fold under “更多条件” with an active-count badge.
+- Clearer empty states with a direct path back to the library, profile-card click to open, removal
+  feedback, a back-to-top button, view switches that land at the top, and tap-outside to close the
+  narrow-screen menu.
+
+The API contract is unchanged; these are browser interface improvements only.
+
 ## 2.5.2 - 2026-09-22
 
 - Added a reproducible public Demo walkthrough with eight fictional records.

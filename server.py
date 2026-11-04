@@ -1085,6 +1085,8 @@ class Handler(BaseHTTPRequestHandler):
                 "/work.js": "work.js",
                 "/work.css": "work.css",
                 "/style.css": "style.css",
+                "/interaction.js": "interaction.js",
+                "/interaction.css": "interaction.css",
                 "/tag-translations.json": "tag-translations.json",
             }
             if path not in files:

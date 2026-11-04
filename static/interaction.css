@@ -1,0 +1,82 @@
+/* Interaction layer: affordances, feedback and motion. Reduced-motion users get the global no-animation rule from style.css. */
+
+/* Press and progress feedback */
+button{transition:background .13s,border-color .13s,transform .08s}
+button:active:not(:disabled){transform:translateY(1px)}
+button[aria-busy="true"]{cursor:progress}
+button[aria-busy="true"]::after{content:"";display:inline-block;width:.85em;height:.85em;margin-left:.5em;vertical-align:-.1em;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:ui-spin .7s linear infinite}
+body:has(dialog[open]) button[aria-busy="true"]::after{display:none}
+@keyframes ui-spin{to{transform:rotate(360deg)}}
+
+/* Cards: the whole card is clickable, the open one stays marked */
+.card{cursor:pointer;transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease}
+@media(hover:hover){.card:hover{transform:translateY(-2px);box-shadow:0 12px 28px #0007}}
+.card.is-active{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 12px 28px #0007}
+.card.is-active .card-title{color:var(--accent)}
+
+/* Detail panel: slide in, step through the list */
+.detail:not([hidden]){animation:ui-slide-in .2s cubic-bezier(.2,.8,.2,1)}
+@keyframes ui-slide-in{from{right:-28px;opacity:.75}}
+.detail-step{display:inline-flex;align-items:center;gap:4px}
+.detail-step button{min-width:40px;padding:6px 10px;font-size:17px;line-height:1}
+#detailPosition{font-size:12px;min-width:48px;text-align:center;font-variant-numeric:tabular-nums}
+
+/* Undo feedback as a snackbar near the bottom edge, where the eye already is */
+.ui-quick-notice{position:fixed;z-index:60;left:50%;bottom:20px;transform:translateX(-50%);width:max-content;max-width:min(640px,calc(100vw - 32px));margin:0;display:flex;align-items:center;gap:12px;padding:10px 10px 12px 16px;background:#1f2b23f7;border:1px solid #628b6c;border-radius:12px;box-shadow:0 14px 40px #000b;overflow:hidden}
+.ui-quick-notice.is-fresh{animation:ui-rise .2s ease-out}
+.ui-quick-notice p{margin:0;flex:1;min-width:0;line-height:1.5;color:#d9f0df;font-size:13px}
+.ui-quick-notice .actions{margin:0;flex-wrap:nowrap;gap:6px}
+.ui-quick-notice #quickUndo{background:transparent;border-color:#7fb38c;color:#bff0cb;font-weight:650;white-space:nowrap}
+.ui-quick-notice #quickUndo:hover:not(:disabled){background:#2d4334}
+.ui-quick-notice #quickDismiss{min-width:38px;padding:6px 10px;background:transparent;border-color:transparent;font-size:17px;line-height:1}
+.ui-quick-notice #quickDismiss:hover{background:#2d4334}
+.ui-quick-notice::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:100%;background:#7fb38c;transform-origin:left}
+.ui-quick-notice.is-fresh::after{animation:ui-life var(--life,10s) linear forwards}
+.ui-quick-notice:hover::after,.ui-quick-notice:focus-within::after{animation-play-state:paused}
+.ui-quick-notice.is-sticky{border-color:#b68d55;background:#2d271ef7}
+.ui-quick-notice.is-sticky p{color:#f3dcb7}
+.ui-quick-notice.is-sticky::after{display:none}
+@keyframes ui-life{to{transform:scaleX(0)}}
+@keyframes ui-rise{from{transform:translate(-50%,14px);opacity:0}}
+@keyframes ui-rise-plain{from{transform:translateY(14px);opacity:0}}
+.detail .ui-quick-notice{left:auto;right:24px;transform:none;max-width:min(612px,calc(100vw - 48px))}
+.detail .ui-quick-notice.is-fresh{animation-name:ui-rise-plain}
+body:has(#jobTray:not([hidden])) .ui-quick-notice{bottom:104px}
+
+/* Toasts: dismiss on click, never stacked on top of the snackbar */
+#toast{cursor:pointer;animation:ui-rise .18s ease-out}
+body:has(#quickActionNotice:not([hidden])) #toast{bottom:96px}
+
+/* Filters: everyday filters first, the rest one click away */
+.more-filters{flex:0 0 auto;align-self:end;white-space:nowrap}
+.more-filters[aria-expanded="true"]{border-color:var(--accent);color:var(--accent)}
+.filters-advanced{order:1;flex:1 1 100%;display:flex;flex-wrap:wrap;gap:10px;align-items:end;padding-top:12px;border-top:1px dashed var(--line)}
+
+/* Profiles */
+.profiles-grid>.empty{grid-column:1/-1;border:1px dashed var(--line);border-radius:12px;padding:44px 20px}
+.empty h2{margin-bottom:8px}
+.empty .muted{margin:0 auto 16px;max-width:520px}
+.empty.compact{padding:22px 12px}
+.profile-card{cursor:pointer;transition:border-color .15s,transform .15s,box-shadow .15s}
+@media(hover:hover){.profile-card:hover{border-color:#676152;transform:translateY(-1px)}}
+.profile-card.is-active{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+
+/* Back to top */
+.back-to-top{position:fixed;z-index:43;right:20px;bottom:20px;width:44px;height:44px;min-height:44px;border-radius:50%;padding:0;font-size:18px;background:#202630f2;box-shadow:0 8px 24px #0008}
+body:has(#compareTray:not([hidden])) .back-to-top{bottom:78px}
+body.detail-open .back-to-top{display:none}
+
+@media(max-width:800px){
+  .sidebar.open{box-shadow:0 0 0 100vmax #0009}
+  .detail-top .eyebrow{display:none}
+  .detail-top>div{width:100%;justify-content:space-between}
+  .detail-step button{min-width:44px}
+  .ui-quick-notice,.detail .ui-quick-notice{left:12px;right:12px;bottom:12px;transform:none;width:auto;max-width:none;flex-wrap:wrap}
+  .ui-quick-notice.is-fresh{animation-name:ui-rise-plain}
+  .ui-quick-notice .actions{margin-left:auto}
+  body:has(#jobTray:not([hidden])) .ui-quick-notice{bottom:100px}
+  .back-to-top{right:12px;bottom:12px}
+  body:has(#compareTray:not([hidden])) .back-to-top{bottom:150px}
+  body:has(#jobTray:not([hidden])) .back-to-top{bottom:100px}
+  .more-filters{flex:1 1 100%}
+}
