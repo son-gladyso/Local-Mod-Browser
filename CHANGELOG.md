@@ -27,6 +27,14 @@
 - The library follows the redesigned Nexus mods listing: near-black page, filters in a left column
   (用途 as a checkbox list with counts, a 隐藏筛选 toggle), dark sort/page-size pills, and tiles laid out
   as title, author, category, update date, summary and an endorsement/download footer.
+- Quieter listing chrome: breadcrumb, title and full-width divider, a results bar with ⇅ sort pills,
+  underline scope tabs, the game row as light text links and a magnifier in search. Tiles show only
+  what a Nexus tile shows; favourite is the small square on the image, tags and 查看文件 / 完整详情
+  appear on hover or keyboard focus (always shown on touch screens), statuses are plain text.
+
+- One header row like Nexus: logo, a game chip (current game, menu to switch, × for all games), menu,
+  search, AI shortcuts and a status dot. The library opens with a hero: art from the first local
+  cover, breadcrumb, cover tile and title, quick game switches and the scope tabs.
 
 The API contract is unchanged; these are browser interface improvements only.
 

@@ -162,6 +162,14 @@ if(category){
   new MutationObserver(paintCategories).observe(category,{childList:true});
   category.addEventListener('change',paintCategories);paintCategories();
 }
+// Library breadcrumb, like "Home › Elden Ring › Mods": the hidden eyebrow line becomes
+// 资料库 › <current page title>, kept in step with the title app.js writes.
+const pageTitle=$('pageTitle'),crumb=document.querySelector('#browseView .heading .eyebrow');
+if(pageTitle&&crumb){
+  crumb.classList.add('crumbs');crumb.setAttribute('aria-hidden','true');
+  const paintCrumb=()=>{crumb.innerHTML=`<span>资料库</span><span class="crumb-sep">›</span><span>${esc(pageTitle.textContent||'')}</span>`};
+  new MutationObserver(paintCrumb).observe(pageTitle,{childList:true,characterData:true,subtree:true});paintCrumb();
+}
 // Desktop "隐藏筛选" toggle above the filter column; phones keep the existing 展开筛选 button.
 const browseView=$('browseView'),filtersPanel=$('filtersPanel');
 if(browseView&&filtersPanel){
@@ -171,6 +179,53 @@ if(browseView&&filtersPanel){
   hide.onclick=()=>setHidden(!browseView.classList.contains('filters-hidden'));
   setHidden(remember('mod-browser-hide-filters')==='1',false);
 }
+
+// Header game chip, like Nexus' "[game] ×" context switch: shows the current game, opens a
+// menu of games, × returns to all games. It drives the same changeGame() as the game buttons.
+const brand=document.querySelector('.topbar .brand'),gameButtons=$('games');
+if(brand&&gameButtons){
+  const chip=document.createElement('div');chip.className='game-chip';
+  chip.innerHTML=`<button type="button" class="game-chip-main" aria-haspopup="menu" aria-expanded="false"><span class="game-chip-thumb" aria-hidden="true"></span><span class="game-chip-name">全部游戏</span><svg class="icon" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m4.5 6.5 3.5 3.5 3.5-3.5"/></svg></button><button type="button" class="game-chip-clear" aria-label="查看全部游戏" title="查看全部游戏" hidden>×</button><div class="game-chip-menu" role="menu" aria-label="切换游戏" hidden></div>`;
+  brand.after(chip);
+  const main=chip.querySelector('.game-chip-main'),clear=chip.querySelector('.game-chip-clear'),menu=chip.querySelector('.game-chip-menu');
+  const setOpen=open=>{menu.hidden=!open;main.setAttribute('aria-expanded',String(open));if(open)menu.querySelector('[aria-checked="true"]')?.focus()};
+  const paintChip=()=>{
+    const games=state.games||[],current=games.find(game=>game.id===state.game),total=games.reduce((sum,game)=>sum+(game.count||0),0);
+    const name=current?current.title:'全部游戏';
+    chip.querySelector('.game-chip-name').textContent=name;chip.querySelector('.game-chip-thumb').textContent=[...name][0]||'';
+    clear.hidden=!current;chip.classList.toggle('has-game',Boolean(current));
+    menu.innerHTML=[{id:'',title:'全部游戏',count:total},...games].map(game=>`<button type="button" role="menuitemradio" aria-checked="${game.id===(state.game||'')}" data-game-pick="${esc(game.id)}"><span>${esc(game.title)}</span><small>${number(game.count||0)}</small></button>`).join('');
+  };
+  main.onclick=()=>setOpen(menu.hidden);
+  clear.onclick=()=>action(()=>changeGame(''));
+  menu.addEventListener('click',event=>{const pick=event.target.closest('[data-game-pick]');if(!pick)return;setOpen(false);action(()=>changeGame(pick.dataset.gamePick))});
+  menu.addEventListener('keydown',event=>{if(event.key==='Escape'){event.stopPropagation();setOpen(false);main.focus()}});
+  document.addEventListener('click',event=>{if(!menu.hidden&&!chip.contains(event.target))setOpen(false)});
+  new MutationObserver(paintChip).observe(gameButtons,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});paintChip();
+}
+// Library hero, like the top of a Nexus mods page: art from the first local cover, breadcrumb,
+// cover tile + title, the game buttons as quick switches and the scope tabs at its foot.
+const heroView=$('browseView'),heroTitle=$('pageTitle');
+if(heroView&&heroTitle&&gameButtons){
+  const hero=document.createElement('section');hero.className='library-hero';hero.setAttribute('aria-label','资料库');
+  const crumbs=heroView.querySelector('.heading .eyebrow'),scope=heroView.querySelector(':scope>.ui-subnav');
+  const head=document.createElement('div');head.className='library-hero-head';
+  const tile=document.createElement('div');tile.className='library-hero-tile';tile.setAttribute('aria-hidden','true');
+  const titles=document.createElement('div');titles.className='library-hero-titles';titles.append(heroTitle);
+  head.append(tile,titles);
+  const label=gameButtons.previousElementSibling;if(label?.classList.contains('section-label'))label.hidden=true;
+  gameButtons.classList.add('library-games');gameButtons.setAttribute('role','group');gameButtons.setAttribute('aria-label','切换游戏');
+  if(crumbs)hero.append(crumbs);hero.append(head,gameButtons);if(scope)hero.append(scope);
+  heroView.prepend(hero);
+  const paintArt=()=>{const img=[...document.querySelectorAll('#cards .card .cover img')].find(image=>image.complete&&image.naturalWidth>0);const src=img?.getAttribute('src');hero.classList.toggle('has-art',Boolean(src));if(src){const value=`url("${src.replace(/["\\\n\r]/g,encodeURIComponent)}")`;hero.style.setProperty('--hero-art',value)}else hero.style.removeProperty('--hero-art');tile.textContent=src?'':([...(heroTitle.textContent||'')][0]||'')};
+  new MutationObserver(paintArt).observe($('cards'),{childList:true});
+  // only images that actually loaded are reused, so a broken cover is never fetched twice
+  $('cards').addEventListener('load',event=>{if(event.target.matches?.('.cover img')&&!hero.classList.contains('has-art'))paintArt()},true);
+  new MutationObserver(paintArt).observe(heroTitle,{childList:true,characterData:true,subtree:true});paintArt();
+}
+// Connection status as a small dot (text kept for screen readers and as tooltip).
+const connection=$('connection');
+if(connection){const paintConnection=()=>{const text=connection.textContent||'';connection.title=text;connection.classList.toggle('is-offline',/中断|失败|重试/.test(text))};new MutationObserver(paintConnection).observe(connection,{childList:true,characterData:true,subtree:true});paintConnection()}
 
 // Profiles: the whole card opens it, the open one is marked, empty states point to the next step.
 $('profilesView').addEventListener('click',event=>{

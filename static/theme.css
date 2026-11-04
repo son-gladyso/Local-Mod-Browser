@@ -386,3 +386,163 @@ body,main{background:var(--nx-nav)}
   .facet-count{color:var(--nx-text-subdued)}
 }
 @media(max-width:1000px){.hide-filters,.facet-list{display:none}}
+
+/* Closer to the Nexus listing, pass 2: quieter chrome, clean tiles ----------- */
+/* Header: search with a magnifier; the game row reads as light text links, not a band */
+.global-search input{padding-left:38px;background:rgba(0,0,0,.4) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23d4d4d8' stroke-width='1.6' stroke-linecap='round'%3E%3Ccircle cx='7' cy='7' r='4.5'/%3E%3Cpath d='m10.5 10.5 3 3'/%3E%3C/svg%3E") 12px 50%/16px no-repeat;border-color:var(--nx-stroke-subdued)}
+@media(min-width:801px){
+  .topbar{background:var(--nx-nav)}
+  .game-btn{border-right:0;padding:0 12px;color:var(--nx-text-subdued);font-size:13px}
+  .game-btn:first-child{padding-left:20px}
+  .game-btn.active{background:transparent;color:#fff;box-shadow:inset 0 -2px 0 var(--nx-primary)}
+  .game-btn small{color:var(--nx-text-weak);font-weight:400;margin-left:6px}
+  .game-btn.active small{color:var(--nx-primary)}
+  .sidebar #games{height:36px}
+  .game-btn,.sidebar nav[aria-label="AI 助手快捷入口"] .nav{height:36px;min-height:36px}
+}
+/* Scope tabs (全部资料 / 收藏 / 最近浏览) as plain underline tabs, no band */
+.ui-subnav{background:transparent;border-bottom:1px solid var(--nx-stroke-weak);margin-bottom:22px}
+.ui-subnav button{border-right:0;font-size:14px;text-transform:none;padding:12px 2px;margin-right:22px;color:var(--nx-text-subdued);min-height:44px}
+.ui-subnav button:hover{background:transparent;color:#fff}
+.ui-subnav button.active{background:transparent;color:#fff;box-shadow:inset 0 -2px 0 var(--nx-primary)}
+/* Breadcrumb above the title */
+.heading .eyebrow.crumbs{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--nx-text-moderate);margin-bottom:10px}
+.crumb-sep{color:var(--nx-text-subdued)}
+.crumbs span:last-child{color:#fff}
+/* Sort / page-size pills with a ⇅ glyph like Nexus */
+#sort,#pageSize{appearance:none;-webkit-appearance:none;padding:0 30px 0 12px;background:rgba(255,255,255,.1) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23d4d4d8' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 6 3-3 3 3M5 10l3 3 3-3'/%3E%3C/svg%3E") right 9px center/14px no-repeat}
+#sort option,#pageSize option{background:var(--nx-surface-low);color:var(--nx-text)}
+/* Tiles: only what a Nexus tile shows; status as quiet text */
+.card .badges{gap:0}
+.card .badges .badge{background:none;padding:0;color:var(--nx-text-subdued);font-size:13px;font-weight:400}
+.card .badges .badge+.badge::before{content:"·";margin:0 6px;color:var(--nx-text-weak)}
+.card .badges .badge.good{color:#86efac}
+.tag-label{display:none}
+@media(min-width:801px) and (hover:hover){
+  .card{position:relative}
+  .cover .image-label{opacity:0;transition:opacity .15s}
+  /* overlay exactly on top of the 16:10 cover: favourite always, the rest on hover/focus */
+  .card .card-actions,.card .card-tag-block{position:absolute;left:0;right:0;top:0;aspect-ratio:16/10;margin:0;padding:12px;pointer-events:none;display:flex;z-index:2}
+  .card .card-actions{align-items:flex-end;justify-content:flex-start;gap:8px}
+  .card .card-tag-block{align-items:flex-end;padding-bottom:58px;background:linear-gradient(180deg,transparent 35%,rgba(0,0,0,.82));opacity:0;transition:opacity .15s}
+  .card .card-tag-block .card-tags{flex-wrap:wrap}
+  .card .card-actions>*{pointer-events:auto;opacity:0;transition:opacity .15s}
+  .card .card-tag-block *{pointer-events:auto}
+  .card .card-actions button,.card .card-actions .full-link{flex:0 0 auto;min-height:32px;background:rgba(15,15,16,.85);border:1px solid var(--nx-stroke-moderate);color:#fff;font-size:13px;border-radius:var(--nx-radius);padding:0 10px}
+  .card .card-actions .full-link{display:inline-flex;align-items:center;color:var(--nx-primary)}
+  .card:hover .card-actions>*,.card:focus-within .card-actions>*,.card:hover .card-tag-block,.card:focus-within .card-tag-block,.card:hover .image-label{opacity:1}
+  /* favourite = the small square at the top-left of the image (Nexus' tile check box) */
+  .card .card-actions .star{opacity:1;position:absolute;top:10px;left:10px;width:30px;height:30px;min-height:30px;padding:0;border-radius:var(--nx-radius);background:#fff;border-color:#fff;color:transparent;font-size:0;overflow:hidden}
+  .card .card-actions .star::before{content:"";width:16px;height:16px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23111' stroke-width='1.6' stroke-linejoin='round'%3E%3Cpath d='M8 2.2l1.8 3.7 4 .6-2.9 2.8.7 4L8 11.4l-3.6 1.9.7-4L2.2 6.5l4-.6z'/%3E%3C/svg%3E") center/contain no-repeat}
+  .card .card-actions .star[aria-pressed="true"]{background:var(--nx-primary);border-color:var(--nx-primary)}
+  .card .card-actions .star[aria-pressed="true"]::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff' stroke='%23fff' stroke-width='1.6' stroke-linejoin='round'%3E%3Cpath d='M8 2.2l1.8 3.7 4 .6-2.9 2.8.7 4L8 11.4l-3.6 1.9.7-4L2.2 6.5l4-.6z'/%3E%3C/svg%3E")}
+  .card .card-actions .star[aria-busy="true"]::after{display:none}
+  .card .card-actions .star{display:grid;place-items:center}
+  .card .card-actions button[data-action="files"]{margin-left:0}
+}
+@media(min-width:1001px){
+  /* Heading laid out like the Nexus listing: crumb, title, divider; results bar below */
+  #browseView{grid-template-areas:"sub sub" "crumb crumb" "title title" "hide bar" "filters chips" "filters cards" "filters empty" "filters pager"}
+  #browseView{grid-template-rows:auto auto auto auto auto 1fr auto auto}
+  #browseView>.heading,#browseView>.heading>div:first-child{display:contents}
+  #browseView>.ui-subnav{grid-area:sub}
+  #browseView .heading .eyebrow{grid-area:crumb}
+  #browseView #pageTitle{grid-area:title;padding-bottom:22px;margin:0 0 22px;border-bottom:1px solid var(--nx-stroke-weak)}
+  #browseView #resultSummary{grid-area:bar;align-self:center;justify-self:start;font-size:16px;color:var(--nx-text-moderate)}
+  #browseView .browse-controls{grid-area:bar;justify-self:end;align-self:center}
+  .hide-filters{grid-area:hide;margin-bottom:0}
+  #browseView>.heading{border:0;padding:0;margin:0}
+  #filtersPanel{grid-area:filters;margin-top:16px}
+  #browseView>#chips{grid-area:chips;margin:16px 0 4px;min-height:0}
+  #browseView>#cards{grid-area:cards;margin-top:12px}
+  #browseView>#empty{grid-area:empty}
+  #browseView>.pagination{grid-area:pager}
+  #browseView.filters-hidden{grid-template-areas:"sub sub" "crumb crumb" "title title" "hide bar" "chips chips" "cards cards" "empty empty" "pager pager"}
+  #browseView.filters-hidden>#cards,#browseView.filters-hidden>#empty,#browseView.filters-hidden>.pagination{grid-column:auto}
+  /* Filter column at Nexus density */
+  #filtersPanel>label,#filtersPanel .filters-advanced>label{font-size:12px;font-weight:600;letter-spacing:.1em;color:var(--nx-text-strong);padding:16px 0 12px}
+  #filtersPanel>label select,#filtersPanel .filters-advanced select,#filtersPanel input[type="date"]{letter-spacing:0;font-size:14px}
+  .facet{min-height:28px;gap:10px;font-size:14px}
+  .facet-box{width:18px;height:18px}
+  .facet[aria-pressed="true"] .facet-box::after{width:8px;height:5px}
+}
+
+/* Top of the page, pass 3: one header row with a game chip, and a hero for the library ---- */
+@media(min-width:801px){
+  :root{--nx-topbar:57px}
+  .topbar{flex-wrap:nowrap;gap:0 14px;background:var(--nx-nav)}
+  .topbar::after{display:none}
+  .game-chip{order:1}
+  .sidebar nav[aria-label="主要功能"]{order:2}
+  .global-search{order:3;flex:1 1 200px;max-width:380px}
+  .sidebar nav[aria-label="AI 助手快捷入口"]{order:4;margin-left:0;align-self:center}
+  .sidebar nav[aria-label="AI 助手快捷入口"] .nav{height:56px;min-height:56px;padding:0 8px;font-size:14px}
+  .sidebar nav[aria-label="AI 助手快捷入口"] .nav.active{box-shadow:inset 0 -3px 0 var(--nx-primary)}
+  #connection{order:5}
+  .sidebar nav[aria-label="主要功能"] .nav{padding:0 11px}
+}
+@media(min-width:801px) and (max-width:1280px){
+  .sidebar nav[aria-label="主要功能"] .nav{padding:0 7px;font-size:15px}
+  .sidebar nav[aria-label="AI 助手快捷入口"] .nav{font-size:13px;padding:0 5px}
+  .global-search kbd{display:none}
+}
+/* game chip: [thumb] name ▾ | × */
+.game-chip{position:relative;display:flex;align-items:center;height:36px;flex:0 0 auto}
+.game-chip>button{height:36px;min-height:36px;border:0;border-radius:0;background:rgba(255,255,255,.1);color:var(--nx-text-strong);font-size:15px;font-weight:400}
+.game-chip>button:hover{background:rgba(255,255,255,.18)}
+.game-chip-main{display:flex;align-items:center;gap:8px;padding:0 10px 0 4px;border-radius:var(--nx-radius)!important;max-width:200px}
+.game-chip.has-game .game-chip-main{border-radius:var(--nx-radius) 0 0 var(--nx-radius)!important}
+.game-chip-clear{width:34px;padding:0;margin-left:1px;border-radius:0 var(--nx-radius) var(--nx-radius) 0!important;font-size:18px!important}
+.game-chip-thumb{width:28px;height:28px;border-radius:2px;background:#3e3e47;color:var(--nx-primary);display:grid;place-items:center;font-size:14px;font-weight:600;flex:0 0 auto}
+.game-chip-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.game-chip-main .icon{width:14px;height:14px;color:var(--nx-text-subdued)}
+.game-chip-menu{position:absolute;top:calc(100% + 8px);left:0;min-width:240px;max-height:60vh;overflow:auto;padding:6px;background:var(--nx-surface-low);border:1px solid var(--nx-stroke-subdued);border-radius:var(--nx-radius);box-shadow:0 16px 40px #000c;z-index:40}
+.game-chip-menu button{display:flex;justify-content:space-between;gap:16px;width:100%;min-height:36px;border:0;border-radius:2px;background:transparent;color:var(--nx-text-strong);font-weight:400;text-align:left}
+.game-chip-menu button:hover{background:rgba(255,255,255,.08)}
+.game-chip-menu button[aria-checked="true"]{background:rgba(255,255,255,.08);box-shadow:inset 3px 0 0 var(--nx-primary)}
+.game-chip-menu small{color:var(--nx-text-subdued)}
+/* connection status: a dot with the text as tooltip */
+#connection{position:relative;width:10px;height:10px;flex:0 0 10px;overflow:hidden;color:transparent;font-size:0;border-radius:50%;background:var(--nx-success);box-shadow:0 0 0 3px rgba(34,197,94,.18)}
+#connection.is-offline{background:var(--nx-danger);box-shadow:0 0 0 3px rgba(239,68,68,.2)}
+/* library hero */
+.library-hero{position:relative;margin:-24px -26px 0;padding:22px 26px 0;background:radial-gradient(120% 140% at 85% 0%,#1d1d21 0%,var(--nx-nav) 70%);border-bottom:1px solid var(--nx-stroke-weak);overflow:hidden}
+.library-hero.has-art{background:linear-gradient(90deg,rgba(15,15,16,.96) 0%,rgba(15,15,16,.78) 45%,rgba(15,15,16,.55) 100%),linear-gradient(180deg,rgba(15,15,16,.2),var(--nx-nav) 98%),var(--hero-art) center 30%/cover no-repeat}
+.library-hero .eyebrow.crumbs{display:flex;gap:8px;align-items:center;margin:0 0 16px;font-size:13px;color:var(--nx-text-moderate)}
+.library-hero .crumbs span:last-child{color:#fff}
+.library-hero-head{display:flex;align-items:center;gap:20px}
+.library-hero-tile{width:62px;height:82px;flex:0 0 auto;border-radius:2px;background:#29292e;color:var(--nx-primary);display:grid;place-items:center;font-size:28px;font-weight:600;box-shadow:0 6px 18px #0009}
+.library-hero.has-art .library-hero-tile{background:var(--hero-art) center/cover no-repeat}
+.library-hero #pageTitle{margin:0;padding:0;border:0;font-size:40px;font-weight:600;line-height:1.15;color:#fff}
+.library-games{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 14px}
+.library-games .game-btn{width:auto;height:32px;min-height:32px;padding:0 12px;border:0;border-radius:var(--nx-radius);background:rgba(255,255,255,.1);color:var(--nx-text-moderate);font-size:14px;box-shadow:none}
+.library-games .game-btn:first-child{padding-left:12px}
+.library-games .game-btn:hover{background:rgba(255,255,255,.18);color:#fff}
+.library-games .game-btn.active{background:#fff;color:#000;box-shadow:none}
+.library-games .game-btn small{margin-left:8px;color:inherit;opacity:.65;font-weight:400}
+.library-games .game-btn.active small{color:#000}
+.library-hero .ui-subnav{margin:4px 0 0;border-bottom:0}
+@media(min-width:1001px){
+  #browseView{grid-template-areas:"hero hero" "hide bar" "filters chips" "filters cards" "filters empty" "filters pager";grid-template-rows:auto auto auto 1fr auto auto}
+  #browseView>.library-hero{grid-area:hero;margin-bottom:22px}
+  #browseView.filters-hidden{grid-template-areas:"hero hero" "hide bar" "chips chips" "cards cards" "empty empty" "pager pager"}
+  #browseView>.heading>div:first-child{display:contents}
+}
+@media(max-width:800px){
+  .game-chip{order:2;margin-left:auto}
+  .game-chip-name{max-width:110px}
+  .library-hero{margin:-18px -14px 0;padding:16px 14px 0}
+  .library-hero #pageTitle{font-size:28px}
+  .library-hero-tile{width:44px;height:58px;font-size:20px}
+  .library-games{flex-wrap:nowrap;overflow-x:auto}
+  #connection{display:none}
+}
+#browseView .library-hero #pageTitle{border:0;padding:0;margin:0}
+/* hover overlay never covers the cover's own controls (e.g. 重试图片): only real buttons take
+   clicks, card actions sit at the top-right, and a cover showing an image error is left alone */
+@media(min-width:801px) and (hover:hover){
+  .card .card-tag-block *{pointer-events:none}
+  .card .card-tag-block button{pointer-events:auto}
+  .card .card-tag-block{padding-bottom:12px}
+  .card .card-actions{align-items:flex-start;justify-content:flex-end}
+  .card:has(.cover .image-error) .card-tag-block,.card:has(.cover .image-error) .card-actions>:not(.star){opacity:0!important;pointer-events:none!important}
+}
