@@ -5,7 +5,7 @@ button{transition:background .13s,border-color .13s,transform .08s}
 button:active:not(:disabled){transform:translateY(1px)}
 button[aria-busy="true"]{cursor:progress}
 button[aria-busy="true"]::after{content:"";display:inline-block;width:.85em;height:.85em;margin-left:.5em;vertical-align:-.1em;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:ui-spin .7s linear infinite}
-body:has(dialog[open]) button[aria-busy="true"]::after{display:none}
+body.has-dialog button[aria-busy="true"]::after{display:none}
 @keyframes ui-spin{to{transform:rotate(360deg)}}
 
 /* Cards: the whole card is clickable, the open one stays marked */
@@ -41,11 +41,11 @@ body:has(dialog[open]) button[aria-busy="true"]::after{display:none}
 @keyframes ui-rise-plain{from{transform:translateY(14px);opacity:0}}
 .detail .ui-quick-notice{left:auto;right:24px;transform:none;max-width:min(612px,calc(100vw - 48px))}
 .detail .ui-quick-notice.is-fresh{animation-name:ui-rise-plain}
-body:has(#jobTray:not([hidden])) .ui-quick-notice{bottom:104px}
+body.has-job-tray .ui-quick-notice{bottom:104px}
 
 /* Toasts: dismiss on click, never stacked on top of the snackbar */
 #toast{cursor:pointer;animation:ui-rise .18s ease-out}
-body:has(#quickActionNotice:not([hidden])) #toast{bottom:96px}
+body.has-notice #toast{bottom:96px}
 
 /* Filters: everyday filters first, the rest one click away */
 .more-filters{flex:0 0 auto;align-self:end;white-space:nowrap}
@@ -63,7 +63,7 @@ body:has(#quickActionNotice:not([hidden])) #toast{bottom:96px}
 
 /* Back to top */
 .back-to-top{position:fixed;z-index:43;right:20px;bottom:20px;width:44px;height:44px;min-height:44px;border-radius:50%;padding:0;font-size:18px;background:#202630f2;box-shadow:0 8px 24px #0008}
-body:has(#compareTray:not([hidden])) .back-to-top{bottom:78px}
+body.has-compare-tray .back-to-top{bottom:78px}
 body.detail-open .back-to-top{display:none}
 
 @media(max-width:800px){
@@ -74,9 +74,9 @@ body.detail-open .back-to-top{display:none}
   .ui-quick-notice,.detail .ui-quick-notice{left:12px;right:12px;bottom:12px;transform:none;width:auto;max-width:none;flex-wrap:wrap}
   .ui-quick-notice.is-fresh{animation-name:ui-rise-plain}
   .ui-quick-notice .actions{margin-left:auto}
-  body:has(#jobTray:not([hidden])) .ui-quick-notice{bottom:100px}
+  body.has-job-tray .ui-quick-notice{bottom:100px}
   .back-to-top{right:12px;bottom:12px}
-  body:has(#compareTray:not([hidden])) .back-to-top{bottom:150px}
-  body:has(#jobTray:not([hidden])) .back-to-top{bottom:100px}
+  body.has-compare-tray .back-to-top{bottom:150px}
+  body.has-job-tray .back-to-top{bottom:100px}
   .more-filters{flex:1 1 100%}
 }

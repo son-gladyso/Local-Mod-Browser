@@ -36,6 +36,11 @@
   search, AI shortcuts and a status dot. The library opens with a hero: art from the first local
   cover, breadcrumb, cover tile and title, quick game switches and the scope tabs.
 
+- Micro-interactions (120–250 ms, off with reduced motion): favourite pop, check-box tick, tiles
+  fading in with a small stagger after filtering, cover zoom on hover, menu/tab underlines that grow
+  in, a game menu that opens and closes softly, prev/next sliding in from its side, the detail panel
+  sliding away on close, and a header shadow once the page scrolls.
+
 The API contract is unchanged; these are browser interface improvements only.
 
 ## 2.5.2 - 2026-09-22

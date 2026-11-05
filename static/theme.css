@@ -316,7 +316,7 @@ dialog::backdrop{background:#000000cc}
   .sidebar .nav.active,.sidebar .game-btn.active{background:var(--nx-surface-mid);color:#fff;box-shadow:inset 3px 0 0 var(--nx-primary)}
   .sidebar .section-label{margin:0;padding:18px 18px 8px;font-size:12px;font-weight:600;color:var(--nx-text-subdued)}
   .sidebar.open{box-shadow:none}
-  body:has(.sidebar.open)::after{content:"";position:fixed;inset:var(--nx-topbar) 0 0 0;background:#000000a6;z-index:19}
+  body.menu-open::after{content:"";position:fixed;inset:var(--nx-topbar) 0 0 0;background:#000000a6;z-index:19}
   .detail{top:0;height:100vh}
   .detail .tabs{padding:0 16px}
   .detail-top,#detailHeading,.detail-tools,#detailBody{padding-left:16px;padding-right:16px}
@@ -546,3 +546,63 @@ body,main{background:var(--nx-nav)}
   .card .card-actions{align-items:flex-start;justify-content:flex-end}
   .card:has(.cover .image-error) .card-tag-block,.card:has(.cover .image-error) .card-actions>:not(.star){opacity:0!important;pointer-events:none!important}
 }
+
+/* Micro-interactions: quick, quiet responses to small actions -------------------------
+   Durations 120–250ms, colour/opacity/small transforms only; style.css turns every
+   animation and transition off for prefers-reduced-motion. */
+/* favourite: short pop on press */
+@keyframes ui-pop{0%{transform:scale(1)}40%{transform:scale(1.18)}100%{transform:scale(1)}}
+.is-popping{animation:ui-pop .24s ease-out}
+/* check box: the tick draws in for the one just toggled */
+@keyframes ui-tick{from{transform:translateY(-1px) rotate(-45deg) scale(.2);opacity:0}to{transform:translateY(-1px) rotate(-45deg) scale(1);opacity:1}}
+@keyframes ui-box{0%{transform:scale(1)}50%{transform:scale(.86)}100%{transform:scale(1)}}
+.facet.just-toggled .facet-box{animation:ui-box .18s ease-out}
+.facet.just-toggled[aria-pressed="true"] .facet-box::after{animation:ui-tick .18s ease-out}
+.facet-box{transition:background .15s,border-color .15s}
+/* results: tiles fade in with a small stagger when the list changes */
+@keyframes ui-enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card.is-entering{animation:ui-enter .22s cubic-bezier(.2,.7,.2,1) both;animation-delay:var(--enter-delay,0ms)}
+/* cover image answers the pointer */
+.cover img{transition:transform .25s ease,filter .25s ease}
+@media(hover:hover){.card:hover .cover img{transform:scale(1.03);filter:brightness(1.06)}}
+/* underline / top bar of the current tab grows in instead of jumping */
+@media(min-width:801px){
+  .sidebar nav[aria-label="主要功能"] .nav,.sidebar nav[aria-label="AI 助手快捷入口"] .nav{background-image:linear-gradient(var(--nx-primary),var(--nx-primary));background-repeat:no-repeat;background-position:50% 100%;background-size:0 3px;transition:background-size .2s ease,color .15s,background-color .15s}
+  .sidebar nav[aria-label="主要功能"] .nav.active,.sidebar nav[aria-label="AI 助手快捷入口"] .nav.active{box-shadow:none;background-size:100% 3px}
+}
+.ui-subnav button{background-image:linear-gradient(var(--nx-primary),var(--nx-primary));background-repeat:no-repeat;background-position:50% 100%;background-size:0 2px;transition:background-size .2s ease,color .15s}
+.ui-subnav button.active{box-shadow:none;background-size:100% 2px}
+.tabs button,.work-tabs button{background-image:linear-gradient(var(--nx-primary),var(--nx-primary));background-repeat:no-repeat;background-position:50% 0;background-size:0 3px;transition:background-size .2s ease,background-color .15s,color .15s}
+.tabs button.active,.work-tabs [aria-current=page]{box-shadow:none;background-size:100% 3px}
+/* game menu opens and closes softly */
+@keyframes ui-menu-in{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+@keyframes ui-menu-out{to{opacity:0;transform:translateY(-4px)}}
+.game-chip-menu:not([hidden]){animation:ui-menu-in .15s ease-out}
+.game-chip-menu.is-closing{animation:ui-menu-out .12s ease-in forwards}
+.game-chip-main .icon{transition:transform .15s}
+.game-chip-main[aria-expanded="true"] .icon{transform:rotate(180deg)}
+/* detail: prev/next slide in from their side; closing slides a panel shape away */
+@keyframes ui-from-right{from{opacity:.4;transform:translateX(18px)}to{opacity:1;transform:none}}
+@keyframes ui-from-left{from{opacity:.4;transform:translateX(-18px)}to{opacity:1;transform:none}}
+.step-from-right{animation:ui-from-right .18s ease-out}
+.step-from-left{animation:ui-from-left .18s ease-out}
+@keyframes ui-slide-out{to{transform:translateX(40px);opacity:0}}
+.detail-ghost{position:fixed;z-index:29;right:0;top:var(--nx-topbar);width:min(660px,calc(100vw - 40px));height:calc(100vh - var(--nx-topbar));background:linear-gradient(var(--nx-surface-low) 0 var(--ghost-head,0px),var(--nx-surface-mid) var(--ghost-head,0px));border-left:1px solid #000;box-shadow:-18px 0 60px #000a;pointer-events:none;animation:ui-slide-out .18s ease-in forwards}
+@media(min-width:1700px){.detail-ghost{width:630px}}
+@media(max-width:800px){.detail-ghost{top:0;width:100vw;height:100vh}}
+/* header: shadow only once content scrolls beneath it */
+.topbar{transition:box-shadow .2s ease}
+.topbar:not(.is-scrolled){box-shadow:none}
+.topbar.is-scrolled{box-shadow:0 6px 16px -6px #000c}
+/* filter chips and pressed buttons */
+.chip{transition:background .15s,color .15s,transform .08s}
+.chip:active{transform:scale(.97)}
+/* keep the growing underline layer through earlier `background:` shorthands (hover/active) */
+@media(min-width:801px){
+  .sidebar nav[aria-label="主要功能"] .nav,.sidebar nav[aria-label="AI 助手快捷入口"] .nav{background-image:linear-gradient(var(--nx-primary),var(--nx-primary))!important;background-repeat:no-repeat!important;background-position:50% 100%!important;background-size:0 3px!important}
+  .sidebar nav[aria-label="主要功能"] .nav.active,.sidebar nav[aria-label="AI 助手快捷入口"] .nav.active{background-size:100% 3px!important}
+}
+.ui-subnav button{background-image:linear-gradient(var(--nx-primary),var(--nx-primary))!important;background-repeat:no-repeat!important;background-position:50% 100%!important;background-size:0 2px!important}
+.ui-subnav button.active{background-size:100% 2px!important}
+.tabs button,.work-tabs button{background-image:linear-gradient(var(--nx-primary),var(--nx-primary))!important;background-repeat:no-repeat!important;background-position:50% 0!important;background-size:0 3px!important}
+.tabs button.active,.work-tabs [aria-current=page]{background-size:100% 3px!important}

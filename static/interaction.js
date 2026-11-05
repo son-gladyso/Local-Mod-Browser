@@ -7,12 +7,22 @@ const reduceMotion=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
 const docked=matchMedia('(min-width:1700px)');
 const hasSelection=()=>String(window.getSelection?.()||'').trim().length>0;
 const inLibrary=view=>typeof isLibraryView==='function'?isLibraryView(view):['browse','favorites','recent'].includes(view);
+const playOnce=(node,name)=>{if(!node||reduceMotion())return;node.classList.remove(name);void node.offsetWidth;node.classList.add(name);node.addEventListener('animationend',()=>node.classList.remove(name),{once:true})};
 const remember=(key,value)=>{try{if(value===undefined)return localStorage.getItem(key);localStorage.setItem(key,value)}catch{return null}};
 
 // Offsets for the detail panel and the phone drawer follow the real header height.
 const header=document.querySelector('.topbar');
 const syncTopbar=()=>document.documentElement.style.setProperty('--nx-topbar',header.offsetHeight+'px');
 new ResizeObserver(syncTopbar).observe(header);syncTopbar();
+
+// Page-level state as body classes (cheaper than body:has() selectors, which make the browser
+// re-check page-wide styles on every DOM change).
+const bodyFlag=(name,on)=>document.body.classList.toggle(name,Boolean(on));
+const watchShown=(id,name)=>{const node=$(id);if(!node)return;const paint=()=>bodyFlag(name,!node.hidden);new MutationObserver(paint).observe(node,{attributes:true,attributeFilter:['hidden']});paint()};
+watchShown('jobTray','has-job-tray');watchShown('quickActionNotice','has-notice');watchShown('compareTray','has-compare-tray');
+new MutationObserver(()=>bodyFlag('menu-open',$('sidebar').classList.contains('open'))).observe($('sidebar'),{attributes:true,attributeFilter:['class']});
+const paintDialogs=()=>bodyFlag('has-dialog',document.querySelector('dialog[open]'));
+for(const dialog of document.querySelectorAll('dialog'))new MutationObserver(paintDialogs).observe(dialog,{attributes:true,attributeFilter:['open']});
 
 // Narrow navigation drawer: a tap outside closes it without also activating what is underneath.
 document.addEventListener('click',event=>{
@@ -66,6 +76,7 @@ function syncDetailContext(){
 async function stepDetail(delta,trigger){
   const ids=cardList().map(card=>card.dataset.id),index=ids.indexOf(state.detail?.id),target=ids[index+delta];
   if(index<0||!target)return;
+  $('detail').dataset.step=delta>0?'next':'prev';
   await openDetail(target,state.tab);
   if(state.detail?.id!==target)return;
   const card=document.querySelector(`#cards .card[data-id="${CSS.escape(target)}"]`);
@@ -154,11 +165,18 @@ const category=$('category');
 if(category){
   const list=document.createElement('div');list.id='categoryList';list.className='facet-list';list.setAttribute('role','group');list.setAttribute('aria-label','用途');
   const label=category.closest('label');label.classList.add('has-facet-list');label.after(list);
+  let signature='',toggledAt=0,justToggled='';
   const paintCategories=()=>{
     const options=[...category.options].filter(option=>option.value);
-    list.innerHTML=options.map(option=>{const match=option.textContent.match(/^(.*) \((\d+)\)$/);return `<button type="button" class="facet" data-value="${esc(option.value)}" aria-pressed="${category.value===option.value}"><span class="facet-box" aria-hidden="true"></span><span class="facet-name">${esc(match?match[1]:option.textContent)}</span>${match?`<span class="facet-count">(${match[2]})</span>`:''}</button>`}).join('')||'<p class="muted">暂无用途分类</p>';
+    const next=options.map(option=>option.value+'\u0000'+option.textContent).join('\u0001');
+    if(next!==signature){
+      signature=next;
+      list.innerHTML=options.map(option=>{const match=option.textContent.match(/^(.*) \((\d+)\)$/);return `<button type="button" class="facet" data-value="${esc(option.value)}" aria-pressed="false"><span class="facet-box" aria-hidden="true"></span><span class="facet-name">${esc(match?match[1]:option.textContent)}</span>${match?`<span class="facet-count">(${match[2]})</span>`:''}</button>`}).join('')||'<p class="muted">暂无用途分类</p>';
+    }
+    list.querySelectorAll('.facet').forEach(button=>button.setAttribute('aria-pressed',String(category.value===button.dataset.value)));
+    if(justToggled&&Date.now()-toggledAt<600){const button=list.querySelector(`.facet[data-value="${CSS.escape(justToggled)}"]`);if(button&&!button.classList.contains('just-toggled'))playOnce(button,'just-toggled')}
   };
-  list.addEventListener('click',event=>{const button=event.target.closest('.facet');if(!button)return;category.value=category.value===button.dataset.value?'':button.dataset.value;category.dispatchEvent(new Event('change',{bubbles:true}))});
+  list.addEventListener('click',event=>{const button=event.target.closest('.facet');if(!button)return;justToggled=button.dataset.value;toggledAt=Date.now();category.value=category.value===button.dataset.value?'':button.dataset.value;category.dispatchEvent(new Event('change',{bubbles:true}))});
   new MutationObserver(paintCategories).observe(category,{childList:true});
   category.addEventListener('change',paintCategories);paintCategories();
 }
@@ -188,7 +206,8 @@ if(brand&&gameButtons){
   chip.innerHTML=`<button type="button" class="game-chip-main" aria-haspopup="menu" aria-expanded="false"><span class="game-chip-thumb" aria-hidden="true"></span><span class="game-chip-name">全部游戏</span><svg class="icon" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m4.5 6.5 3.5 3.5 3.5-3.5"/></svg></button><button type="button" class="game-chip-clear" aria-label="查看全部游戏" title="查看全部游戏" hidden>×</button><div class="game-chip-menu" role="menu" aria-label="切换游戏" hidden></div>`;
   brand.after(chip);
   const main=chip.querySelector('.game-chip-main'),clear=chip.querySelector('.game-chip-clear'),menu=chip.querySelector('.game-chip-menu');
-  const setOpen=open=>{menu.hidden=!open;main.setAttribute('aria-expanded',String(open));if(open)menu.querySelector('[aria-checked="true"]')?.focus()};
+  let closing=null;
+  const setOpen=open=>{clearTimeout(closing);main.setAttribute('aria-expanded',String(open));if(open){menu.classList.remove('is-closing');menu.hidden=false;menu.querySelector('[aria-checked="true"]')?.focus();return}if(menu.hidden)return;if(reduceMotion()){menu.hidden=true;return}menu.classList.add('is-closing');closing=setTimeout(()=>{menu.hidden=true;menu.classList.remove('is-closing')},120)};
   const paintChip=()=>{
     const games=state.games||[],current=games.find(game=>game.id===state.game),total=games.reduce((sum,game)=>sum+(game.count||0),0);
     const name=current?current.title:'全部游戏';
@@ -249,4 +268,17 @@ document.body.append(toTop);
 const paintTop=()=>{toTop.hidden=window.scrollY<900};
 window.addEventListener('scroll',paintTop,{passive:true});paintTop();
 toTop.onclick=()=>{window.scrollTo({top:0,behavior:reduceMotion()?'auto':'smooth'});$('main').focus({preventScroll:true})};
+
+// Micro-interactions: small, quick responses to small actions (all skipped with reduced motion).
+// favourite: a short pop where the press happened
+document.addEventListener('click',event=>{const star=event.target.closest?.('[data-action="favorite"],#detailFavorite');if(star)playOnce(star,'is-popping')},true);
+// results: new tiles fade in, slightly staggered, whenever the list is replaced
+// (cards are fresh elements here, so no forced reflow is needed to start the animation)
+new MutationObserver(records=>{if(reduceMotion())return;let index=0;for(const record of records)for(const card of record.addedNodes){if(card.nodeType!==1||!card.classList.contains('card'))continue;card.style.setProperty('--enter-delay',Math.min(index++,12)*22+'ms');card.classList.add('is-entering');card.addEventListener('animationend',()=>card.classList.remove('is-entering'),{once:true})}}).observe($('cards'),{childList:true});
+// prev / next: the new MOD slides in from the side it came from
+new MutationObserver(()=>{const detail=$('detail'),step=detail.dataset.step;if(!step)return;delete detail.dataset.step;for(const node of [detail.querySelector('.detail-masthead'),$('detailBody')])playOnce(node,step==='next'?'step-from-right':'step-from-left')}).observe($('detailHeading'),{childList:true});
+// closing the panel: a plain panel shape slides away (no copied content, so nothing is duplicated)
+new MutationObserver(records=>{const detail=$('detail');if(!detail.hidden||reduceMotion()||!records.some(record=>record.oldValue===null))return;const box=detail.getBoundingClientRect();if(!box.width&&!records.length)return;const ghost=document.createElement('div');ghost.className='detail-ghost';ghost.setAttribute('aria-hidden','true');const mast=detail.querySelector('.detail-masthead');ghost.style.setProperty('--ghost-head',(mast?.offsetHeight||0)+'px');document.body.append(ghost);ghost.addEventListener('animationend',()=>ghost.remove(),{once:true});setTimeout(()=>ghost.remove(),400)}).observe($('detail'),{attributes:true,attributeFilter:['hidden'],attributeOldValue:true});
+// header picks up a shadow once the page scrolls under it
+const topbar=document.querySelector('.topbar');const paintScrolled=()=>topbar?.classList.toggle('is-scrolled',window.scrollY>4);window.addEventListener('scroll',paintScrolled,{passive:true});paintScrolled();
 })();
