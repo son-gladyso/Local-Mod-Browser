@@ -185,7 +185,7 @@ if(category){
 const pageTitle=$('pageTitle'),crumb=document.querySelector('#browseView .heading .eyebrow');
 if(pageTitle&&crumb){
   crumb.classList.add('crumbs');crumb.setAttribute('aria-hidden','true');
-  const paintCrumb=()=>{crumb.innerHTML=`<span>资料库</span><span class="crumb-sep">›</span><span>${esc(pageTitle.textContent||'')}</span>`};
+  const paintCrumb=()=>{crumb.innerHTML=`<span>资料库</span><span class="crumb-sep" aria-hidden="true"></span><span>${esc(pageTitle.textContent||'')}</span>`};
   new MutationObserver(paintCrumb).observe(pageTitle,{childList:true,characterData:true,subtree:true});paintCrumb();
 }
 // Desktop "隐藏筛选" toggle above the filter column; phones keep the existing 展开筛选 button.
@@ -203,7 +203,7 @@ if(browseView&&filtersPanel){
 const brand=document.querySelector('.topbar .brand'),gameButtons=$('games');
 if(brand&&gameButtons){
   const chip=document.createElement('div');chip.className='game-chip';
-  chip.innerHTML=`<button type="button" class="game-chip-main" aria-haspopup="menu" aria-expanded="false"><span class="game-chip-thumb" aria-hidden="true"></span><span class="game-chip-name">全部游戏</span><svg class="icon" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m4.5 6.5 3.5 3.5 3.5-3.5"/></svg></button><button type="button" class="game-chip-clear" aria-label="查看全部游戏" title="查看全部游戏" hidden>×</button><div class="game-chip-menu" role="menu" aria-label="切换游戏" hidden></div>`;
+  chip.innerHTML=`<button type="button" class="game-chip-main" aria-haspopup="menu" aria-expanded="false"><span class="game-chip-thumb" aria-hidden="true"></span><span class="game-chip-name">全部游戏</span><svg class="icon" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m4.5 6.5 3.5 3.5 3.5-3.5"/></svg></button><button type="button" class="game-chip-clear" aria-label="查看全部游戏" title="查看全部游戏" hidden></button><div class="game-chip-menu" role="menu" aria-label="切换游戏" hidden></div>`;
   brand.after(chip);
   const main=chip.querySelector('.game-chip-main'),clear=chip.querySelector('.game-chip-clear'),menu=chip.querySelector('.game-chip-menu');
   let closing=null;
@@ -262,7 +262,7 @@ document.addEventListener('click',event=>{
 
 // Back to top for long result pages.
 const toTop=document.createElement('button');
-Object.assign(toTop,{id:'backToTop',type:'button',className:'back-to-top',textContent:'↑',title:'回到顶部',hidden:true});
+Object.assign(toTop,{id:'backToTop',type:'button',className:'back-to-top',textContent:'',title:'回到顶部',hidden:true});
 toTop.setAttribute('aria-label','回到顶部');
 document.body.append(toTop);
 const paintTop=()=>{toTop.hidden=window.scrollY<900};

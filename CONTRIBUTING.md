@@ -38,7 +38,7 @@ node --check tests/browser.cjs
 git diff --check
 ```
 
-Changes to UI behavior should also run the Playwright browser acceptance tests.
+Changes to UI behavior should also run the Playwright browser acceptance tests. Visual changes follow [`docs/design-system.md`](docs/design-system.md) (colour tokens, the 4/8px spacing scale, type scale, radius levels, one line-icon set, motion limits); change that document first if a change needs to depart from it.
 Changes to migrations, recovery, scheduling, batching or durability need focused
 failure-path tests and an explanation of the evidence in the pull request.
 

@@ -41,6 +41,11 @@
   in, a game menu that opens and closes softly, prev/next sliding in from its side, the detail panel
   sliding away on close, and a header shadow once the page scrolls.
 
+- Added `docs/design-system.md` (colour tokens, 4/8px spacing scale, eight-step type scale, radius
+  levels, one line-icon set, motion and content rules) and brought the styles in line with it:
+  spacing reduced from 26 values to 9, font sizes from 17 to 8, and text glyphs (‹ › × ✓ ↑ +)
+  replaced by the same line icons as the stats.
+
 The API contract is unchanged; these are browser interface improvements only.
 
 ## 2.5.2 - 2026-09-22

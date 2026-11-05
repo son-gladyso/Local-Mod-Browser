@@ -18,17 +18,17 @@ body.has-dialog button[aria-busy="true"]::after{display:none}
 .detail:not([hidden]){animation:ui-slide-in .2s cubic-bezier(.2,.8,.2,1)}
 @keyframes ui-slide-in{from{right:-28px;opacity:.75}}
 .detail-step{display:inline-flex;align-items:center;gap:4px}
-.detail-step button{min-width:40px;padding:6px 10px;font-size:17px;line-height:1}
+.detail-step button{min-width:40px;padding:4px 8px;font-size:16px;line-height:1}
 #detailPosition{font-size:12px;min-width:48px;text-align:center;font-variant-numeric:tabular-nums}
 
 /* Undo feedback as a snackbar near the bottom edge, where the eye already is */
-.ui-quick-notice{position:fixed;z-index:60;left:50%;bottom:20px;transform:translateX(-50%);width:max-content;max-width:min(640px,calc(100vw - 32px));margin:0;display:flex;align-items:center;gap:12px;padding:10px 10px 12px 16px;background:#1f2b23f7;border:1px solid #628b6c;border-radius:12px;box-shadow:0 14px 40px #000b;overflow:hidden}
+.ui-quick-notice{position:fixed;z-index:60;left:50%;bottom:20px;transform:translateX(-50%);width:max-content;max-width:min(640px,calc(100vw - 32px));margin:0;display:flex;align-items:center;gap:12px;padding:8px 8px 12px 16px;background:#1f2b23f7;border:1px solid #628b6c;border-radius:8px;box-shadow:0 14px 40px #000b;overflow:hidden}
 .ui-quick-notice.is-fresh{animation:ui-rise .2s ease-out}
 .ui-quick-notice p{margin:0;flex:1;min-width:0;line-height:1.5;color:#d9f0df;font-size:13px}
-.ui-quick-notice .actions{margin:0;flex-wrap:nowrap;gap:6px}
+.ui-quick-notice .actions{margin:0;flex-wrap:nowrap;gap:4px}
 .ui-quick-notice #quickUndo{background:transparent;border-color:#7fb38c;color:#bff0cb;font-weight:650;white-space:nowrap}
 .ui-quick-notice #quickUndo:hover:not(:disabled){background:#2d4334}
-.ui-quick-notice #quickDismiss{min-width:38px;padding:6px 10px;background:transparent;border-color:transparent;font-size:17px;line-height:1}
+.ui-quick-notice #quickDismiss{min-width:38px;padding:4px 8px;background:transparent;border-color:transparent;font-size:16px;line-height:1}
 .ui-quick-notice #quickDismiss:hover{background:#2d4334}
 .ui-quick-notice::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:100%;background:#7fb38c;transform-origin:left}
 .ui-quick-notice.is-fresh::after{animation:ui-life var(--life,10s) linear forwards}
@@ -50,13 +50,13 @@ body.has-notice #toast{bottom:96px}
 /* Filters: everyday filters first, the rest one click away */
 .more-filters{flex:0 0 auto;align-self:end;white-space:nowrap}
 .more-filters[aria-expanded="true"]{border-color:var(--accent);color:var(--accent)}
-.filters-advanced{order:1;flex:1 1 100%;display:flex;flex-wrap:wrap;gap:10px;align-items:end;padding-top:12px;border-top:1px dashed var(--line)}
+.filters-advanced{order:1;flex:1 1 100%;display:flex;flex-wrap:wrap;gap:8px;align-items:end;padding-top:12px;border-top:1px dashed var(--line)}
 
 /* Profiles */
-.profiles-grid>.empty{grid-column:1/-1;border:1px dashed var(--line);border-radius:12px;padding:44px 20px}
+.profiles-grid>.empty{grid-column:1/-1;border:1px dashed var(--line);border-radius:8px;padding:48px 16px}
 .empty h2{margin-bottom:8px}
 .empty .muted{margin:0 auto 16px;max-width:520px}
-.empty.compact{padding:22px 12px}
+.empty.compact{padding:24px 12px}
 .profile-card{cursor:pointer;transition:border-color .15s,transform .15s,box-shadow .15s}
 @media(hover:hover){.profile-card:hover{border-color:#676152;transform:translateY(-1px)}}
 .profile-card.is-active{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
